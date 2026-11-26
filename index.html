@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gym Guide</title>
+<meta name="description" content="Exercise technique and training terms in Czech and English">
+<meta name="theme-color" content="#111418">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Gym Guide">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111418'/%3E%3Crect x='10' y='22' width='6' height='20' rx='2' fill='%23c8f169'/%3E%3Crect x='48' y='22' width='6' height='20' rx='2' fill='%23c8f169'/%3E%3Crect x='17' y='26' width='5' height='12' rx='2' fill='%23c8f169'/%3E%3Crect x='42' y='26' width='5' height='12' rx='2' fill='%23c8f169'/%3E%3Crect x='22' y='30' width='20' height='4' fill='%23c8f169'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#111418; --panel:#1a1f25; --panel2:#222830; --line:#2c333c;
+    --text:#e9edf1; --muted:#9aa4af; --accent:#c8f169; --accent-ink:#111418;
+    --warn:#ffb86b; --radius:14px;
+  }
+  *{box-sizing:border-box;min-width:0}
+  html,body{margin:0;background:var(--bg);color:var(--text);
+    font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,sans-serif;
+    -webkit-tap-highlight-color:transparent;overflow-x:clip}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  a{color:var(--accent)}
+  .wrap{max-width:720px;margin:0 auto;padding:0 16px calc(90px + env(safe-area-inset-bottom))}
+  header{position:sticky;top:0;z-index:5;background:var(--bg);
+    padding:calc(14px + env(safe-area-inset-top)) 0 10px}
+  .title{display:flex;align-items:center;gap:10px;margin:0 0 12px}
+  .title h1{font-size:22px;margin:0;letter-spacing:-.01em;flex:1}
+  .title .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);flex:none}
+  .lang{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;flex:none}
+  .lang button{padding:6px 11px;font-size:13px;font-weight:700;color:var(--muted);min-height:34px}
+  .lang button.on{background:var(--accent);color:var(--accent-ink)}
+  .search{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);
+    background:var(--panel);color:var(--text);font-size:16px;outline:none}
+  .search:focus{border-color:var(--accent)}
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:12px 0 2px;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;padding:7px 13px;border-radius:999px;border:1px solid var(--line);
+    background:var(--panel);color:var(--muted);font-size:14px;white-space:nowrap}
+  .chip.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+  .list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+  .card{display:flex;align-items:center;gap:12px;width:100%;text-align:left;min-height:56px;
+    padding:14px;border-radius:var(--radius);background:var(--panel);border:1px solid var(--line)}
+  .card:active{background:var(--panel2)}
+  .card .main{flex:1;min-width:0}
+  .card .name{font-weight:600}
+  .card .sub{color:var(--muted);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .badge{flex:none;font-size:12px;padding:3px 8px;border-radius:6px;background:var(--panel2);color:var(--muted)}
+  .badge.ok{color:var(--accent)}
+  .abbr{flex:none;min-width:64px;max-width:40%;font-weight:700;color:var(--accent);font-size:15px}
+  .star{flex:none;font-size:20px;color:var(--muted);padding:6px 4px;min-width:44px;min-height:44px}
+  .star.on{color:var(--accent)}
+  .empty{color:var(--muted);text-align:center;padding:40px 0}
+  nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:10;display:flex;justify-content:center;
+    background:rgba(17,20,24,.96);border-top:1px solid var(--line);
+    padding:8px 8px calc(8px + env(safe-area-inset-bottom));backdrop-filter:blur(8px)}
+  nav.tabs .in{display:flex;gap:6px;width:100%;max-width:720px}
+  nav.tabs button{flex:1;padding:10px 4px;border-radius:12px;color:var(--muted);font-size:14px;font-weight:600;min-height:44px}
+  nav.tabs button.on{background:var(--panel2);color:var(--accent)}
+  .detail{position:fixed;inset:0;z-index:20;background:var(--bg);overflow-y:auto;
+    transform:translateX(100%);transition:transform .22s ease;visibility:hidden}
+  .detail.open{transform:none;visibility:visible}
+  @media (prefers-reduced-motion:reduce){.detail{transition:none}}
+  .detail .bar{position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;z-index:2;
+    background:var(--bg);padding:calc(8px + env(safe-area-inset-top)) 12px 6px;border-bottom:1px solid var(--line)}
+  .back{font-weight:600;color:var(--accent);padding:8px 4px;min-height:44px}
+  .detail .body{max-width:720px;margin:0 auto;padding:18px 16px calc(40px + env(safe-area-inset-bottom))}
+  .detail h2{font-size:26px;margin:0 0 6px;letter-spacing:-.01em;line-height:1.15}
+  .alt{color:var(--muted);font-size:14px;margin:0 0 6px}
+  .meta{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 16px}
+  .lead{color:#cfd6dd;margin:0 0 18px}
+  .sec{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:0 0 12px}
+  .sec h3{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 8px}
+  .sec ol,.sec ul{margin:0;padding-left:20px}
+  .sec li{margin:4px 0}
+  .sec.warn h3{color:var(--warn)}
+  .sec.src li{font-size:14px;overflow-wrap:anywhere}
+  .video{position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;background:#000;margin-bottom:10px}
+  .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;border-radius:12px;min-height:48px;
+    background:var(--accent);color:var(--accent-ink);font-weight:700;text-decoration:none}
+  .btn.ghost{background:var(--panel2);color:var(--text);margin-top:8px}
+  .example{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;background:var(--panel2);
+    padding:10px 12px;border-radius:10px;white-space:pre-wrap}
+  .related{display:flex;flex-wrap:wrap;gap:8px}
+  .related button{padding:8px 12px;border-radius:999px;background:var(--panel2);font-size:14px;min-height:40px}
+  .about p{color:#cfd6dd;margin:0 0 10px}
+  .note{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="title"><span class="dot"></span><h1 id="pageTitle">Exercises</h1>
+      <div class="lang" role="group" aria-label="Language">
+        <button data-lang="cs">CZ</button><button data-lang="en">EN</button>
+      </div>
+    </div>
+    <input id="q" class="search" type="search" autocomplete="off">
+    <div id="chips" class="chips"></div>
+  </header>
+  <main id="list" class="list"></main>
+</div>
+
+<nav class="tabs"><div class="in">
+  <button data-tab="ex" class="on"></button>
+  <button data-tab="terms"></button>
+  <button data-tab="fav"></button>
+  <button data-tab="about"></button>
+</div></nav>
+
+<section id="detail" class="detail" aria-hidden="true">
+  <div class="bar"><button class="back" id="back"></button><button class="star" id="dStar" aria-label="Save">☆</button></div>
+  <div class="body" id="dBody"></div>
+</section>
+
+<script>
+{
+/* ============================================================
+   SOURCES — only pages actually consulted when checking content.
+   ============================================================ */
+const S = {
+  cfTerms:["CrossFit – Terms explained","https://www.crossfit.com/essentials/crossfit-terms-explained"],
+  cfFront:["CrossFit – The front squat","https://crossfit.com/essentials/the-front-squat"],
+  cfFrontDev:["CrossFit – Developing the front squat","https://www.crossfit.com/pro-coach/developing-the-front-squat"],
+  cfWall:["CrossFit – The wall-ball shot","https://www.crossfit.com/essentials/the-wall-ball"],
+  cfGamesWB:["CrossFit Games – wall-ball movement standard","https://games.crossfit.com/workouts/onlinequalifiers/2024/2"],
+  tabataRits:["Ritsumeikan University – origin of the Tabata protocol","https://www.ritsumei.ac.jp/research/radiant/eng/2019-2021/story5.html"],
+  tabataRev:["Tabata et al. – review of Tabata training (PMC)","https://pmc.ncbi.nlm.nih.gov/articles/pmid/31004287"],
+  helmsRIR:["Helms et al. – Application of the RIR-based RPE scale (NSCA)","https://core.ac.uk/download/85256189.pdf"],
+  zourdos:["Zourdos et al. 2016 – RIR-based RPE scale (JSCR)","https://openrepository.aut.ac.nz/items/efef3b25-6701-4fb5-bb82-55fcd2a26027"],
+  nasmTempo:["NASM – Tempo training","https://www.nasm.org/resource-center/blog/training/tempo-training-using-lifting-tempo-to-drive-adaption"],
+  rpDrop:["RP Strength – Drop sets","https://rpstrength.com/blogs/podcasts/drop-sets-the-time-efficient-technique-thats-actually-backed-by-data"],
+  nasmDrop:["NASM – Drop sets","https://blog.nasm.org/drop-sets-for-gains-why-this-lifting-format-works"],
+  doms:["PainScience – Delayed-onset muscle soreness","https://painscience.com/articles/delayed-onset-muscle-soreness.php"],
+  zone2:["Sitko et al. 2025 – What is Zone 2 training? (IJSPP)","https://pubmed.ncbi.nlm.nih.gov/40010355/"],
+  brRow:["British Rowing – Indoor rowing technique","https://www.britishrowing.org/indoor-rowing/go-row-indoor/how-to-indoor-row/british-rowing-technique/"],
+  c2Row:["Concept2 – Rowing technique","https://concept2.com/training/rowing-technique"],
+  squatBSA:["Myer et al. – The back squat assessment (PMC)","https://pmc.ncbi.nlm.nih.gov/articles/PMC4262933"],
+  ssDead:["Starting Strength – Deadlift setup (five steps)","https://startingstrength.com/training/common-deadlift-error-hips-too-low-and-the-bar-forward"],
+  nscaRDL:["NSCA Exercise Technique Manual – Romanian deadlift","https://www.nsca.com/education/articles/kinetic-select/romanian-deadlift-rdl/"],
+  nasmRDL:["NASM – Romanian deadlift basics","https://blog.nasm.org/romanian-deadlift-basics"],
+  ltBSS:["Life Time – Bulgarian split squat cues","https://experiencelife.lifetime.life/article/check-your-bulgarian-split-squat-form-with-these-4-expert-cues/"],
+  hkHip:["Human Kinetics – Barbell glute hip thrust","https://us.humankinetics.com/blogs/excerpt/barbell-glute-hip-thrust"],
+  bcHip:["Bret Contreras – Hip thrust technique","https://bretcontreras.com/?p=21003"],
+  joiBench:["Jacksonville Orthopaedic Institute – Bench press technique","https://www.joionline.net/library/proper-bench-press-technique/"],
+  hkOHP:["Human Kinetics – What is the overhead press","https://us.humankinetics.com/blogs/excerpt/what-is-the-overhead-press"],
+  nasmPull:["NASM – Chin-ups vs. pull-ups","https://www.nasm.org/resource-center/blog/training/chin-ups-vs-pull-ups-the-difference-the-benefits-muscles-worked"],
+  nscaFace:["NSCA Exercise Technique Manual – Face pull","https://dxpprod.nsca.com/education/articles/kinetic-select/face-pull-machine/"],
+  sfHinge:["StrongFirst – The athletic hip hinge","https://www.strongfirst.com/explanation-athletic-hip-hinge/"],
+  wikiKB:["Wikipedia – Kettlebell swing (hardstyle vs. sport)","https://en.wikipedia.org/wiki/Kettlebell_swing"],
+  onnitBox:["Onnit – Box jump guide","https://www.onnit.com/academy/box-jump"],
+  nasmBug:["NASM – Dead bug","https://www.nasm.org/resource-center/exercise-library/dead-bug"],
+  sussexPallof:["University of Sussex – Anti-rotation & Pallof press","https://www.sussex.ac.uk/sport/documents/anti-rotations-pallof-press.pdf"],
+  hkKB:["Human Kinetics (Steve Cotter) – Classic kettlebell lifts","https://us.humankinetics.com/blogs/excerpt/classic-kettlebell-lifts"],
+  ltClean:["Life Time – Break it down: the kettlebell clean","https://experiencelife.lifetime.life/article/break-it-down-the-kettlebell-clean/"],
+  kwClean:["Kettlebellsworkouts.com – Clean without banging your wrist","https://kettlebellsworkouts.com/teaching-points-for-the-kettlebell-clean/"],
+  kwSnatch:["Kettlebellsworkouts.com – Teaching points for the snatch","https://kettlebellsworkouts.com/teaching-points-for-the-kettlebell-snatch/"],
+  cwSnatch:["Coach – How to do the kettlebell snatch","https://coachweb.com/kettlebell-exercises/7336/how-to-nail-the-kettlebell-snatch"],
+  wikiGS:["Wikipedia – Kettlebell lifting (kettlebell sport)","https://en.wikipedia.org/wiki/Kettlebell_lifting"],
+  bmJerk:["Breaking Muscle – How to master the kettlebell jerk","https://breakingmuscle.com/how-to-master-the-kettlebell-jerk/"],
+  eliteGS:["EliteFTS – Programming for kettlebell sport","https://elitefts.com/education/how-to-program-your-training-for-kettlebell-sport"],
+  aceTGU:["ACE – Technique series: Turkish get-up","https://www.acefitness.org/prosourcearticle/5686/ace-technique-series-turkish-get-up"],
+  nscaTGU:["NSCA – Turkish get-up","https://dxpprod.nsca.com/education/articles/kinetic-select/turkish-get-up/"],
+  cpWind:["ClassPass – Kettlebell windmill","https://classpass.com/movements/kettlebell-windmill"],
+  slHalo:["StrengthLog – Kettlebell halo","https://www.strengthlog.com/?p=31261"],
+  pelHalo:["Peloton – Kettlebell halos","https://www.onepeloton.com/blog/kettlebell-halos"],
+  ltGorilla:["Life Time – Break it down: the gorilla row","https://experiencelife.lifetime.life/article/break-it-down-the-gorilla-row/"],
+  gsGorilla:["Gymshark – Gorilla rows","https://www.gymshark.com/blog/article/gorilla-rows"]
+};
+
+/* ============================================================
+   EXERCISES — en + cs. To embed a specific video, add
+   video:"YOUTUBE_ID" (the part after watch?v=).
+   ============================================================ */
+const EXERCISES = [
+ // ---------------- LEGS ----------------
+ {id:"back-squat",cat:"legs",equip:"barbell",level:1,src:["squatBSA"],
+  en:{name:"Back Squat",muscles:"Quads, glutes, adductors, lower back",
+   about:"The barbell rests on the upper back while you squat down and stand back up. A foundational strength movement for the whole lower body.",
+   steps:["Set the bar in a rack at about armpit height. Step under it so it sits on your upper traps (high bar) or a little lower across the rear delts (low bar).","Grip the bar just outside your shoulders, squeeze the shoulder blades together, unrack and take 2–3 steps back.","Feet about shoulder width, toes forward or turned out slightly (up to roughly 30°) — whatever lets your knees track over your toes.","Breathe in and brace your core, then push the hips back and bend the knees at the same time.","Go as deep as you can while keeping a neutral spine — usually hip crease at or below knee level.","Drive up through the whole foot, chest up, knees following the toes."],
+   cues:["Brace like you're about to be punched","Knees in line with toes","Whole foot on the floor — heel, big toe, little toe"],
+   mistakes:["Knees collapsing inward","Heels lifting off the floor","Lower back rounding at the bottom under heavy load","Chest dropping so the squat turns into a good morning"]},
+  cs:{name:"Dřep s činkou na zádech",muscles:"Kvadricepsy, hýždě, přitahovače, spodní záda",
+   about:"Osa leží na horní části zad, ty jdeš do dřepu a zpět nahoru. Základní silový cvik pro celé nohy.",
+   steps:["Nastav osu ve stojanu zhruba do výšky podpaží. Podlez ji tak, aby ležela na horním trapézu (vysoká pozice) nebo o kus níž přes zadní delty (nízká pozice).","Chyť osu kousek vně ramen, stáhni lopatky k sobě, sundej osu a udělej 2–3 kroky dozadu.","Chodidla zhruba na šířku ramen, špičky rovně nebo mírně ven (asi do 30°) — tak, aby kolena šla ve směru špiček.","Nadechni se a zpevni trup, pak současně posílej boky dozadu a krč kolena.","Jdi tak hluboko, jak zvládneš s neutrální páteří — obvykle kyčelní ohyb v úrovni kolen nebo pod nimi.","Vytlač se nahoru přes celé chodidlo, hrudník nahoře, kolena ve směru špiček."],
+   cues:["Zpevni se, jako bys čekal ránu do břicha","Kolena v linii se špičkami","Celé chodidlo na zemi — pata, palec, malík"],
+   mistakes:["Kolena padají dovnitř","Paty se zvedají od země","Kulatí se spodní záda ve spodní fázi při těžké váze","Hrudník padá dopředu a dřep se mění v předklon"]}},
+ {id:"front-squat",cat:"legs",equip:"barbell",level:1,src:["cfFront","cfFrontDev"],
+  en:{name:"Front Squat",muscles:"Quads, glutes, upper back, core",
+   about:"The bar rests on the front of the shoulders. Forces a more upright torso than the back squat and loads the quads and upper back more.",
+   steps:["Rack the bar on the front of the shoulders and upper chest. Hands just outside the shoulders with a loose, fingertip grip.","Lift the elbows so the upper arms are roughly parallel to the floor.","Feet about shoulder width, toes slightly out. Brace.","Squat down keeping the torso as upright as possible.","Stand up, driving the elbows and chest up."],
+   cues:["Elbows up the whole time","Chest tall"],
+   mistakes:["Elbows dropping, which tips the bar forward","Bar not in contact with the shoulders (held only by the hands)","Upper back rounding"]},
+  cs:{name:"Čelní dřep",muscles:"Kvadricepsy, hýždě, horní záda, střed těla",
+   about:"Osa leží na přední straně ramen. Vynucuje vzpřímenější trup než dřep s osou na zádech a víc zatěžuje kvadricepsy a horní záda.",
+   steps:["Polož osu na přední delty a horní část hrudníku. Ruce kousek vně ramen, volný úchop konečky prstů.","Zvedni lokty tak, aby paže byly zhruba rovnoběžně se zemí.","Chodidla na šířku ramen, špičky mírně ven. Zpevni se.","Jdi do dřepu s co nejvzpřímenějším trupem.","Vstávej a tlač lokty i hrudník nahoru."],
+   cues:["Lokty celou dobu nahoře","Hrudník vysoko"],
+   mistakes:["Padající lokty — osa se překlápí dopředu","Osa neleží na ramenou, drží ji jen ruce","Kulatá horní záda"]}},
+ {id:"goblet-squat",cat:"legs",equip:"dbkb",level:0,kb:true,
+  en:{name:"Goblet Squat",muscles:"Quads, glutes, core",
+   about:"Squat while holding one dumbbell or kettlebell at the chest. A good way to learn the squat pattern.",
+   steps:["Hold the weight vertically against your chest, elbows pointing down.","Feet a bit wider than shoulders, toes slightly out.","Squat down so the elbows go inside the knees.","Pause briefly at the bottom, then stand up."],
+   cues:["Chest proud","Elbows brush the inside of the knees"],
+   mistakes:["Letting the weight drift away from the body","Rising onto the toes"]},
+  cs:{name:"Goblet dřep",muscles:"Kvadricepsy, hýždě, střed těla",
+   about:"Dřep s jednoručkou nebo kettlebellem drženým u hrudníku. Dobrý způsob, jak se naučit dřep.",
+   steps:["Drž závaží svisle u hrudníku, lokty míří dolů.","Chodidla o kousek šířeji než ramena, špičky mírně ven.","Jdi do dřepu tak, aby lokty šly mezi kolena.","Krátce se zastav dole a vstaň."],
+   cues:["Hrudník hrdě vpřed","Lokty se otřou o vnitřní stranu kolen"],
+   mistakes:["Závaží se vzdaluje od těla","Přenášení váhy na špičky"]}},
+ {id:"deadlift",cat:"legs",equip:"barbell",level:1,src:["ssDead"],
+  en:{name:"Deadlift (Conventional)",muscles:"Glutes, hamstrings, back extensors, traps, grip",
+   about:"Lifting a loaded barbell from the floor to standing. Trains the whole posterior chain.",
+   steps:["Stand with the bar over the middle of your foot — about 2–3 cm from the shins. Heels roughly hip width, toes slightly out.","Without moving the bar, bend at the hips and grip it just outside your legs.","Bend the knees until the shins touch the bar — don't push the bar forward.","Lift your chest to flatten the back. Take a breath and brace.","Push the floor away and drag the bar up your legs to standing.","Lower by pushing the hips back first, then bend the knees once the bar passes them."],
+   cues:["Push the floor away, don't yank the bar","Bar stays close — drag it up your legs","Lats tight"],
+   mistakes:["Rounding the lower back","Hips too low at the start, so the bar drifts forward","Hips shooting up first","Leaning back excessively at the top"]},
+  cs:{name:"Mrtvý tah (klasický)",muscles:"Hýždě, hamstringy, vzpřimovače, trapézy, úchop",
+   about:"Zvednutí naložené osy ze země do stoje. Trénuje celý zadní řetězec.",
+   steps:["Postav se tak, aby osa byla nad středem chodidla — asi 2–3 cm od holení. Paty zhruba na šířku boků, špičky mírně ven.","Aniž bys pohnul osou, předkloň se v kyčlích a chyť ji kousek vně nohou.","Pokrč kolena, až se holeně dotknou osy — osu přitom netlač dopředu.","Zvedni hrudník, aby se záda srovnala. Nadechni se a zpevni.","Odtlač zem a veď osu po nohou nahoru až do stoje.","Spouštěj tak, že nejdřív posíláš boky dozadu a kolena pokrčíš, až osa mine kolena."],
+   cues:["Odtlač zem, netrhej osou","Osa blízko — klouže po nohou","Zpevněné široké zádové svaly"],
+   mistakes:["Kulatá spodní záda","Boky na startu příliš nízko — osa uteče dopředu","Boky vystřelí nahoru jako první","Přehnaný záklon nahoře"]}},
+ {id:"rdl",cat:"legs",equip:"bbdb",level:0,src:["nscaRDL","nasmRDL"],
+  en:{name:"Romanian Deadlift (RDL)",muscles:"Hamstrings, glutes, back extensors",
+   about:"A hip hinge starting from standing with soft knees. Emphasises the hamstrings through a long stretch.",
+   steps:["Stand tall holding the bar at hip height, knees slightly bent.","Push the hips back while keeping the bar close to the thighs.","Lower until you feel a strong hamstring stretch while the back stays flat — for most people somewhere between just below the knee and mid-shin.","Drive the hips forward to return to standing."],
+   cues:["Hips back, like closing a car door with your backside","Knee angle stays almost the same"],
+   mistakes:["Bending the knees too much (turns into a squat)","Rounding the back to reach lower","Letting the bar drift forward"]},
+  cs:{name:"Rumunský mrtvý tah (RDL)",muscles:"Hamstringy, hýždě, vzpřimovače",
+   about:"Předklon v kyčlích ze stoje s lehce pokrčenými koleny. Klade důraz na hamstringy v protažení.",
+   steps:["Stůj rovně s osou v úrovni boků, kolena lehce pokrčená.","Posílej boky dozadu, osa jede těsně po stehnech.","Spouštěj, dokud necítíš silné protažení hamstringů a záda zůstávají rovná — u většiny lidí někde mezi místem těsně pod koleny a polovinou holení.","Vytlač boky dopředu zpět do stoje."],
+   cues:["Boky dozadu, jako bys zadkem zavíral dveře auta","Úhel v kolenou se skoro nemění"],
+   mistakes:["Příliš pokrčená kolena (z cviku je dřep)","Kulacení zad, aby ses dostal níž","Osa se vzdaluje od nohou"]}},
+ {id:"lunge",cat:"legs",equip:"bwdb",level:0,
+  en:{name:"Walking Lunge",muscles:"Quads, glutes, adductors",
+   about:"Alternating forward lunges while moving across the floor. Trains each leg separately and challenges balance.",
+   steps:["Stand tall, step forward with one leg.","Lower until the back knee is just above the floor and the front shin is roughly vertical.","Push through the front foot and bring the back leg forward into the next step."],
+   cues:["Torso tall","Front knee follows the toes"],
+   mistakes:["Steps too short","Front knee caving inward","Pushing off mostly with the back leg"]},
+  cs:{name:"Výpady v chůzi",muscles:"Kvadricepsy, hýždě, přitahovače",
+   about:"Střídavé výpady vpřed s postupem dopředu. Trénuje každou nohu zvlášť a rovnováhu.",
+   steps:["Stůj rovně a vykroč jednou nohou vpřed.","Spusť se, až je zadní koleno těsně nad zemí a přední holeň zhruba svisle.","Odraz se přes přední chodidlo a přenes zadní nohu do dalšího kroku."],
+   cues:["Trup vzpřímený","Přední koleno ve směru špičky"],
+   mistakes:["Příliš krátké kroky","Přední koleno padá dovnitř","Odraz hlavně zadní nohou"]}},
+ {id:"bulgarian",cat:"legs",equip:"benchdb",level:1,src:["ltBSS"],
+  en:{name:"Bulgarian Split Squat",muscles:"Quads, glutes, adductors",
+   about:"A split squat with the rear foot elevated on a bench. A very effective single-leg strength builder.",
+   steps:["Stand about a big stride in front of a bench and place the top of your rear foot on it.","Lower until the front thigh is about parallel to the floor.","Drive up through the front foot."],
+   cues:["Most of the weight on the front leg","More upright torso = more quads; slight forward lean = more glutes"],
+   mistakes:["Standing too close to the bench","Pushing up with the back leg"]},
+  cs:{name:"Bulharský dřep",muscles:"Kvadricepsy, hýždě, přitahovače",
+   about:"Dřep ve výpadu se zadní nohou na lavičce. Velmi účinný cvik na sílu jedné nohy.",
+   steps:["Postav se zhruba velký krok před lavičku a polož na ni nárt zadní nohy.","Spouštěj se, až je přední stehno zhruba rovnoběžně se zemí.","Vytlač se nahoru přes přední chodidlo."],
+   cues:["Většina váhy na přední noze","Vzpřímenější trup = víc kvadricepsy; mírný předklon = víc hýždě"],
+   mistakes:["Stojíš příliš blízko lavičky","Odtlačování zadní nohou"]}},
+ {id:"hip-thrust",cat:"legs",equip:"bbbench",level:0,src:["hkHip","bcHip"],
+  en:{name:"Hip Thrust",muscles:"Glutes, hamstrings",
+   about:"With the upper back on a bench, extend the hips to lift a barbell resting across them. A direct glute exercise.",
+   steps:["Sit with the lower part of your shoulder blades against a bench, bar across the hip crease (use a pad).","Feet flat, about hip width, placed so the shins are vertical at the top.","Tuck the chin slightly and drive the hips up until torso and thighs form a straight line.","Squeeze the glutes for a moment, then lower under control."],
+   cues:["Ribs down, chin tucked","Finish with the glutes, not by arching the lower back"],
+   mistakes:["Over-arching the lower back at the top","Feet too far away (becomes a hamstring exercise) or too close"]},
+  cs:{name:"Hip thrust",muscles:"Hýždě, hamstringy",
+   about:"Horní záda opřená o lavičku, propínáš kyčle a zvedáš osu ležící přes boky. Cílený cvik na hýždě.",
+   steps:["Sedni si tak, aby se lavičky dotýkala spodní část lopatek, osa přes kyčelní ohyb (použij návlek).","Chodidla na zemi zhruba na šířku boků, tak aby holeně byly nahoře svisle.","Mírně stáhni bradu a vytlač boky nahoru, až trup a stehna tvoří rovnou linii.","Chvíli zatni hýždě a pak kontrolovaně spouštěj."],
+   cues:["Žebra dolů, brada stažená","Dokonči hýžděmi, ne prohnutím beder"],
+   mistakes:["Přehnané prohnutí beder nahoře","Chodidla příliš daleko (zaberou hamstringy) nebo příliš blízko"]}},
+ {id:"leg-press",cat:"legs",equip:"machine",level:0,
+  en:{name:"Leg Press",muscles:"Quads, glutes",
+   about:"Pushing a weighted sled away with the legs while seated. Lets you train the legs hard without loading the spine.",
+   steps:["Sit with back and hips flat against the pad, feet shoulder width on the platform.","Release the safeties and lower the sled by bending the knees toward the chest.","Go as deep as you can without the hips rolling off the pad.","Press back up without slamming the knees into lockout."],
+   cues:["Lower back stays on the pad"],
+   mistakes:["Hips lifting off the seat at the bottom","Locking the knees hard","Very short range with very heavy weight"]},
+  cs:{name:"Legpress",muscles:"Kvadricepsy, hýždě",
+   about:"Vsedě odtlačuješ nohama zatíženou plošinu. Umožňuje trénovat nohy naplno bez zatížení páteře.",
+   steps:["Sedni si se zády a boky na opěrce, chodidla na šířku ramen na plošině.","Uvolni pojistky a spouštěj plošinu krčením kolen k hrudníku.","Jdi tak hluboko, jak to jde bez toho, aby se pánev odlepila od opěrky.","Vytlač zpět, aniž bys prudce zamkl kolena."],
+   cues:["Bedra zůstávají na opěrce"],
+   mistakes:["Pánev se dole zvedá ze sedáku","Prudké zamykání kolen","Velmi krátký rozsah s velkou váhou"]}},
+ {id:"calf-raise",cat:"legs",equip:"machstep",level:0,
+  en:{name:"Standing Calf Raise",muscles:"Calves",
+   about:"Rising onto the balls of the feet against resistance.",
+   steps:["Stand with the balls of the feet on a step or platform, heels hanging off.","Lower the heels for a full stretch.","Rise as high as possible, pause, then lower slowly."],
+   cues:["Full stretch, full squeeze","Pause at the bottom to remove the bounce"],
+   mistakes:["Bouncing through short reps"]},
+  cs:{name:"Výpony ve stoje",muscles:"Lýtka",
+   about:"Zvedání na špičky proti odporu.",
+   steps:["Stoupni si přední částí chodidel na schod nebo plošinu, paty volně.","Spusť paty do plného protažení.","Zvedni se co nejvýš, zastav se a pomalu spouštěj."],
+   cues:["Plné protažení, plné stažení","Pauza dole, ať neodpružuješ"],
+   mistakes:["Krátká pérovaná opakování"]}},
+
+ // ---------------- PUSH ----------------
+ {id:"bench",cat:"push",equip:"barbell",level:1,src:["joiBench"],
+  en:{name:"Bench Press",muscles:"Chest, front delts, triceps",
+   about:"Lying on a flat bench, lower a barbell to the chest and press it back up. The main upper-body pushing strength lift.",
+   steps:["Lie with eyes under the bar, feet flat on the floor.","Grip slightly wider than shoulder width. Pull the shoulder blades back and down.","Unrack with straight arms over the shoulders.","Lower the bar to the lower chest / sternum with elbows roughly 45–70° from the body (depends on grip width).","Press up and slightly back toward the rack position."],
+   cues:["Shoulder blades pinned","Forearms vertical","Feet drive into the floor"],
+   mistakes:["Elbows flared to 90°","Bouncing the bar off the chest","Hips lifting off the bench","Heavy sets without a spotter or safeties"]},
+  cs:{name:"Bench press (tlak na lavici)",muscles:"Prsa, přední delty, tricepsy",
+   about:"Vleže na rovné lavici spouštíš osu k hrudníku a tlačíš ji zpět. Hlavní silový tlakový cvik pro horní polovinu těla.",
+   steps:["Lehni si tak, aby oči byly pod osou, chodidla celou plochou na zemi.","Úchop o kousek širší než ramena. Stáhni lopatky dozadu a dolů.","Sundej osu s propnutými pažemi nad ramena.","Spouštěj osu ke spodní části hrudníku / hrudní kosti, lokty zhruba 45–70° od těla (podle šíře úchopu).","Vytlač nahoru a mírně zpět nad ramena."],
+   cues:["Lopatky přišpendlené","Předloktí svisle","Nohy tlačí do země"],
+   mistakes:["Lokty roztažené do 90°","Odrážení osy od hrudníku","Zvedání pánve z lavice","Těžké série bez dopomoci nebo bezpečnostních zarážek"]}},
+ {id:"incline-db",cat:"push",equip:"dbbench",level:0,
+  en:{name:"Incline Dumbbell Press",muscles:"Upper chest, front delts, triceps",
+   about:"Pressing dumbbells on a bench set to about 30–45°. Emphasises the upper chest.",
+   steps:["Set the bench to 30–45°. Sit with dumbbells on the thighs, then kick them up as you lie back.","Start with dumbbells above the chest.","Lower to the sides of the upper chest.","Press up, bringing the dumbbells slightly together."],
+   cues:["Shoulder blades back","Control the lowering"],
+   mistakes:["Bench too steep (becomes a shoulder press)","Dropping the dumbbells uncontrolled at the end"]},
+  cs:{name:"Tlak s jednoručkami na šikmé lavici",muscles:"Horní část prsou, přední delty, tricepsy",
+   about:"Tlak jednoruček na lavici nastavené asi na 30–45°. Klade důraz na horní část prsou.",
+   steps:["Nastav lavici na 30–45°. Sedni si s jednoručkami na stehnech a při lehání si je nahoď nahoru.","Začni s jednoručkami nad hrudníkem.","Spouštěj je po stranách horní části hrudníku.","Vytlač nahoru a mírně je přibliž k sobě."],
+   cues:["Lopatky dozadu","Kontrolované spouštění"],
+   mistakes:["Příliš strmá lavice (z cviku je tlak na ramena)","Nekontrolované pouštění jednoruček na konci"]}},
+ {id:"ohp",cat:"push",equip:"barbell",level:1,src:["hkOHP"],
+  en:{name:"Overhead Press",muscles:"Shoulders, triceps, upper chest, core",
+   about:"Standing strict press of a barbell from the shoulders to overhead.",
+   steps:["Bar on the front of the shoulders, grip just outside shoulder width, forearms vertical.","Squeeze the glutes and brace so the lower back doesn't arch.","Press the bar straight up, moving the head back slightly to let it pass.","Once the bar passes the forehead, bring the head 'through' so the bar finishes over the shoulders and mid-foot."],
+   cues:["Glutes tight, ribs down","Bar moves in a straight line — the head moves around it"],
+   mistakes:["Leaning back so it becomes an incline press","Bar finishing in front of the head","Bending the knees for drive (that's a push press)"]},
+  cs:{name:"Tlak nad hlavu (military press)",muscles:"Ramena, tricepsy, horní část prsou, střed těla",
+   about:"Striktní tlak osy ve stoje z ramen nad hlavu.",
+   steps:["Osa na předních ramenech, úchop kousek vně ramen, předloktí svisle.","Zatni hýždě a zpevni trup, ať se neprohýbají bedra.","Tlač osu přímo nahoru a hlavu dej mírně dozadu, ať ji osa mine.","Jakmile osa mine čelo, prostrč hlavu „oknem“ dopředu, aby osa skončila nad rameny a středem chodidel."],
+   cues:["Hýždě zatnuté, žebra dolů","Osa jede rovně — hlava jí uhýbá"],
+   mistakes:["Záklon, ze kterého je tlak na šikmé lavici","Osa končí před hlavou","Pokrčení kolen pro švih (to už je push press)"]}},
+ {id:"pushup",cat:"push",equip:"bw",level:0,
+  en:{name:"Push-up",muscles:"Chest, front delts, triceps, core",
+   about:"Lowering the body to the floor and pushing back up from a plank position.",
+   steps:["Hands slightly wider than shoulders, body in a straight line from head to heels.","Lower until the chest is close to the floor, elbows roughly 45° from the body.","Push back up to straight arms."],
+   cues:["Hold the plank the whole time","Screw your hands into the floor"],
+   mistakes:["Hips sagging","Head poking forward","Half reps"],
+   scale:"Easier: hands on a bench or box. Harder: feet elevated, weighted vest, or deficit."},
+  cs:{name:"Klik",muscles:"Prsa, přední delty, tricepsy, střed těla",
+   about:"Z pozice prkna spouštíš tělo k zemi a vytlačuješ se zpět.",
+   steps:["Dlaně o kousek šířeji než ramena, tělo v rovné linii od hlavy k patám.","Spusť se, až je hrudník těsně nad zemí, lokty zhruba 45° od těla.","Vytlač se zpět do propnutých paží."],
+   cues:["Celou dobu drž prkno","Jako bys dlaně zašroubovával do země"],
+   mistakes:["Prověšená pánev","Hlava vystrčená dopředu","Poloviční opakování"],
+   scale:"Lehčí: ruce na lavičce nebo bedně. Těžší: nohy výš, zátěžová vesta nebo kliky z hloubky."}},
+ {id:"dip",cat:"push",equip:"bars",level:1,
+  en:{name:"Dip",muscles:"Chest, triceps, front delts",
+   about:"Lowering and raising the body between parallel bars.",
+   steps:["Support yourself on straight arms, shoulders down away from the ears.","Lower by bending the elbows, leaning slightly forward.","Go down until the shoulders are around elbow level — or only as far as your shoulders are comfortable.","Press back to straight arms."],
+   cues:["Shoulders down, chest up"],
+   mistakes:["Shoulders rolling forward at the bottom","Going deeper than your shoulders tolerate"],
+   scale:"Easier: assisted dip machine or band. Harder: add weight with a dip belt."},
+  cs:{name:"Kliky na bradlech (dipy)",muscles:"Prsa, tricepsy, přední delty",
+   about:"Spouštění a zvedání těla mezi bradly.",
+   steps:["Opři se o propnuté paže, ramena dolů od uší.","Spouštěj se krčením loktů s mírným předklonem.","Jdi dolů, až jsou ramena zhruba v úrovni loktů — nebo jen tak hluboko, jak je to pro ramena příjemné.","Vytlač se zpět do propnutých paží."],
+   cues:["Ramena dolů, hrudník nahoru"],
+   mistakes:["Ramena se dole stáčejí dopředu","Hlouběji, než ramena snesou"],
+   scale:"Lehčí: asistovaný stroj nebo guma. Těžší: přidej zátěž na opasku."}},
+ {id:"lateral-raise",cat:"push",equip:"db",level:0,
+  en:{name:"Lateral Raise",muscles:"Side delts",
+   about:"Raising dumbbells out to the sides to about shoulder height. Isolation for the side of the shoulders.",
+   steps:["Stand with dumbbells at your sides, slight bend in the elbows.","Raise the arms out to the sides until roughly shoulder height.","Lower slowly."],
+   cues:["Lead with the elbows","Think 'out', not 'up'"],
+   mistakes:["Swinging with the body","Shrugging the traps up","Going too heavy"]},
+  cs:{name:"Upažování s jednoručkami",muscles:"Boční delty",
+   about:"Zvedání jednoruček do stran zhruba do výšky ramen. Izolovaný cvik na boční část ramen.",
+   steps:["Stůj s jednoručkami podél těla, lokty lehce pokrčené.","Zvedej paže do stran zhruba do výšky ramen.","Pomalu spouštěj."],
+   cues:["Vedou lokty","Mysli na „ven“, ne „nahoru“"],
+   mistakes:["Švihání tělem","Krčení ramen k uším","Příliš velká váha"]}},
+ {id:"pushdown",cat:"arms",equip:"cable",level:0,
+  en:{name:"Triceps Pushdown",muscles:"Triceps",
+   about:"Extending the elbows against a cable from a high pulley.",
+   steps:["Stand facing a high pulley with a rope or bar attachment.","Elbows by your sides.","Push down until the arms are straight, then return until the forearms are about parallel to the floor."],
+   cues:["Only the forearms move"],
+   mistakes:["Elbows drifting forward","Leaning over the weight to push with bodyweight"]},
+  cs:{name:"Stahování kladky na triceps",muscles:"Tricepsy",
+   about:"Propínání loktů proti odporu horní kladky.",
+   steps:["Postav se čelem k horní kladce s lanem nebo tyčí.","Lokty u těla.","Stlač dolů do propnutých paží, pak se vrať, až jsou předloktí zhruba vodorovně."],
+   cues:["Hýbou se jen předloktí"],
+   mistakes:["Lokty ujíždějí dopředu","Nakláníš se nad závaží a tlačíš vahou těla"]}},
+
+ // ---------------- PULL ----------------
+ {id:"pullup",cat:"pull",equip:"bar",level:1,src:["nasmPull"],
+  en:{name:"Pull-up",muscles:"Lats, biceps, upper back",
+   about:"Hanging from a bar with an overhand grip and pulling the chin above it. Chin-up = underhand grip, more biceps.",
+   steps:["Hang with hands slightly wider than shoulders, arms straight.","Set the shoulder blades down and back, then pull the elbows down toward the ribs.","Continue until the chin clears the bar.","Lower under control to a full hang."],
+   cues:["Elbows to your back pockets","Body braced to limit swinging"],
+   mistakes:["Partial reps without a full hang","Swinging or kicking (unless doing kipping on purpose)","Craning the neck to get the chin over"],
+   scale:"Easier: band-assisted, assisted machine, or slow negatives. Harder: weighted."},
+  cs:{name:"Shyb nadhmatem",muscles:"Široký sval zádový, bicepsy, horní záda",
+   about:"Vis na hrazdě nadhmatem a přítah, až je brada nad hrazdou. Shyb podhmatem (chin-up) víc zapojí bicepsy.",
+   steps:["Vis s rukama o kousek šířeji než ramena, paže propnuté.","Stáhni lopatky dolů a dozadu, pak táhni lokty dolů k žebrům.","Pokračuj, až je brada nad hrazdou.","Kontrolovaně se spusť do plného visu."],
+   cues:["Lokty do zadních kapes","Zpevněné tělo, ať se nehoupáš"],
+   mistakes:["Poloviční opakování bez plného visu","Houpání nebo kopání (pokud nejde o záměrný kipping)","Natahování krku přes hrazdu"],
+   scale:"Lehčí: s gumou, na asistovaném stroji nebo pomalé negativy. Těžší: se zátěží."}},
+ {id:"row",cat:"pull",equip:"barbell",level:1,
+  en:{name:"Barbell Row",muscles:"Upper back, lats, rear delts, biceps",
+   about:"Bent-over pull of a barbell toward the torso.",
+   steps:["Hinge forward to roughly 30–45° above horizontal, back flat, knees soft.","Grip slightly wider than shoulders.","Pull the bar to the lower ribs / upper belly.","Lower under control without changing the torso angle."],
+   cues:["Squeeze the shoulder blades at the top","Torso stays still"],
+   mistakes:["Standing up more with every rep","Using momentum from the hips","Rounded back"]},
+  cs:{name:"Přítahy osy v předklonu",muscles:"Horní záda, široký sval zádový, zadní delty, bicepsy",
+   about:"Přítah osy k trupu v předklonu.",
+   steps:["Předkloň se v kyčlích zhruba na 30–45° nad vodorovnou, záda rovná, kolena lehce pokrčená.","Úchop o kousek širší než ramena.","Přitáhni osu ke spodním žebrům / hornímu břichu.","Kontrolovaně spouštěj bez změny úhlu trupu."],
+   cues:["Nahoře stáhni lopatky","Trup zůstává v klidu"],
+   mistakes:["S každým opakováním se víc narovnáváš","Švih z boků","Kulatá záda"]}},
+ {id:"pulldown",cat:"pull",equip:"cable",level:0,
+  en:{name:"Lat Pulldown",muscles:"Lats, biceps, upper back",
+   about:"Seated pull of a wide bar down to the upper chest. A good alternative and progression for pull-ups.",
+   steps:["Sit with thighs locked under the pad, grip slightly wider than shoulders.","Lean back slightly and pull the bar to the upper chest by driving the elbows down.","Return until the arms are straight and you feel a stretch in the lats."],
+   cues:["Elbows down and in","Chest up to meet the bar"],
+   mistakes:["Leaning far back and rowing it","Pulling behind the neck","Not straightening the arms at the top"]},
+  cs:{name:"Stahování horní kladky",muscles:"Široký sval zádový, bicepsy, horní záda",
+   about:"Vsedě stahuješ širokou tyč k horní části hrudníku. Dobrá alternativa a příprava na shyby.",
+   steps:["Sedni si se stehny zapřenými pod opěrkou, úchop o kousek širší než ramena.","Mírně se zakloň a stáhni tyč k horní části hrudníku tahem loktů dolů.","Vrať se do propnutých paží s protažením zádových svalů."],
+   cues:["Lokty dolů a k tělu","Hrudník vychází tyči naproti"],
+   mistakes:["Velký záklon a přítah jako při veslování","Stahování za hlavu","Nepropnuté paže nahoře"]}},
+ {id:"cable-row",cat:"pull",equip:"cable",level:0,
+  en:{name:"Seated Cable Row",muscles:"Mid back, lats, rear delts, biceps",
+   about:"Seated horizontal pull of a cable handle toward the stomach.",
+   steps:["Sit tall, feet on the platform, knees slightly bent.","Pull the handle to the stomach, elbows close to the body.","Squeeze the shoulder blades, then let the arms extend fully with control."],
+   cues:["Chest up, pull with the elbows"],
+   mistakes:["Swinging the torso back and forth","Shrugging the shoulders up"]},
+  cs:{name:"Přítahy spodní kladky vsedě",muscles:"Střední část zad, široký sval zádový, zadní delty, bicepsy",
+   about:"Vodorovný přítah madla k břichu vsedě.",
+   steps:["Seď vzpřímeně, chodidla na opěrce, kolena lehce pokrčená.","Přitáhni madlo k břichu, lokty blízko těla.","Stáhni lopatky a pak kontrolovaně propni paže."],
+   cues:["Hrudník nahoru, táhni lokty"],
+   mistakes:["Houpání trupem dopředu a dozadu","Krčení ramen"]}},
+ {id:"face-pull",cat:"pull",equip:"cablerope",level:0,src:["nscaFace"],
+  en:{name:"Face Pull",muscles:"Rear delts, rotator cuff, mid traps",
+   about:"Pulling a rope toward the face with elbows high. Popular for shoulder health and posture.",
+   steps:["Set the rope at face height or slightly higher.","Start with arms extended; set the shoulder blades back first.","Pull the rope toward the face, separating the hands, elbows high.","Finish with hands beside the ears and the upper arms rotated out."],
+   cues:["Pull apart, not just back"],
+   mistakes:["Going too heavy and leaning back","Elbows dropping below the hands","Pulling to the chest instead of the face"]},
+  cs:{name:"Face pull",muscles:"Zadní delty, rotátorová manžeta, střední trapéz",
+   about:"Přítah lana k obličeji s lokty vysoko. Oblíbený cvik pro zdravá ramena a držení těla.",
+   steps:["Nastav lano do výšky obličeje nebo o kousek výš.","Začni s propnutými pažemi, nejdřív stáhni lopatky dozadu.","Táhni lano k obličeji, ruce od sebe, lokty vysoko.","Skonči s rukama vedle uší a pažemi vytočenými ven."],
+   cues:["Roztahuj lano, netáhni jen dozadu"],
+   mistakes:["Příliš velká váha a záklon","Lokty pod úrovní rukou","Přítah k hrudníku místo k obličeji"]}},
+ {id:"curl",cat:"arms",equip:"dbbb",level:0,
+  en:{name:"Biceps Curl",muscles:"Biceps, forearms",
+   about:"Bending the elbows to lift a weight toward the shoulders.",
+   steps:["Stand tall, arms straight, palms forward.","Curl the weight up keeping the elbows by your sides.","Lower slowly to full extension."],
+   cues:["Elbows stay still"],
+   mistakes:["Swinging the body","Cutting the bottom of the rep short"]},
+  cs:{name:"Bicepsový zdvih",muscles:"Bicepsy, předloktí",
+   about:"Krčení loktů se zvednutím závaží k ramenům.",
+   steps:["Stůj rovně, paže propnuté, dlaně dopředu.","Zvedni závaží, lokty zůstávají u těla.","Pomalu spusť do plného propnutí."],
+   cues:["Lokty v klidu"],
+   mistakes:["Švihání tělem","Nedotažené spodní části pohybu"]}},
+
+ // ---------------- CORE ----------------
+ {id:"plank",cat:"core",equip:"bw",level:0,
+  en:{name:"Plank",muscles:"Abs, obliques, glutes",
+   about:"Holding a straight-body position on forearms and toes.",
+   steps:["Forearms on the floor, elbows under shoulders.","Legs straight, body in a line from head to heels.","Squeeze the glutes and pull the ribs toward the hips. Hold."],
+   cues:["Tuck the tailbone slightly","Push the floor away with the forearms"],
+   mistakes:["Hips sagging","Hips piked high","Holding the breath"]},
+  cs:{name:"Prkno (plank)",muscles:"Břišní svaly, šikmé svaly, hýždě",
+   about:"Výdrž v rovné pozici na předloktích a špičkách.",
+   steps:["Předloktí na zemi, lokty pod rameny.","Nohy propnuté, tělo v linii od hlavy k patám.","Zatni hýždě a přitáhni žebra k pánvi. Drž."],
+   cues:["Mírně podsaď pánev","Odtlačuj zem předloktími"],
+   mistakes:["Prověšená pánev","Zadek vystrčený nahoru","Zadržování dechu"]}},
+ {id:"hanging-raise",cat:"core",equip:"bar",level:1,
+  en:{name:"Hanging Leg Raise",muscles:"Abs, hip flexors",
+   about:"Hanging from a bar and raising the legs. Easier version: knee raise.",
+   steps:["Hang from a bar, shoulders engaged.","Raise straight legs (or bent knees), curling the pelvis toward the chest at the top.","Lower slowly without swinging."],
+   cues:["Curl the pelvis, don't just lift the legs"],
+   mistakes:["Swinging for momentum","Only lifting to hip height without curling the pelvis"]},
+  cs:{name:"Zvedání nohou ve visu",muscles:"Břišní svaly, flexory kyčle",
+   about:"Vis na hrazdě a zvedání nohou. Lehčí varianta: přitahování kolen.",
+   steps:["Vis na hrazdě se zapojenými rameny.","Zvedni propnuté nohy (nebo pokrčená kolena) a nahoře podsaď pánev k hrudníku.","Pomalu spouštěj bez houpání."],
+   cues:["Podsaď pánev, nezvedej jen nohy"],
+   mistakes:["Houpání pro švih","Zvedání jen do výšky boků bez podsazení pánve"]}},
+ {id:"dead-bug",cat:"core",equip:"bw",level:0,src:["nasmBug"],
+  en:{name:"Dead Bug",muscles:"Deep abs, obliques",
+   about:"Lying on the back, extending the opposite arm and leg while keeping the lower back on the floor. An anti-extension core exercise.",
+   steps:["Lie on your back, arms straight up, hips and knees at 90°.","Press the lower back gently into the floor.","Slowly extend one arm overhead and the opposite leg out.","Return and switch sides."],
+   cues:["Lower back never leaves the floor","Exhale as you extend"],
+   mistakes:["Arching the back","Moving too fast"]},
+  cs:{name:"Dead bug (mrtvý brouk)",muscles:"Hluboké břišní svaly, šikmé svaly",
+   about:"Vleže na zádech natahuješ opačnou ruku a nohu a bedra přitom zůstávají na zemi. Cvik proti prohnutí (anti-extenze).",
+   steps:["Lehni si na záda, paže kolmo vzhůru, kyčle a kolena v 90°.","Jemně přitlač bedra k zemi.","Pomalu natáhni jednu paži za hlavu a opačnou nohu dopředu.","Vrať se a vyměň strany."],
+   cues:["Bedra se nikdy neodlepí od země","Při natahování vydechni"],
+   mistakes:["Prohnutá záda","Příliš rychlý pohyb"]}},
+ {id:"pallof",cat:"core",equip:"cableband",level:0,src:["sussexPallof"],
+  en:{name:"Pallof Press",muscles:"Obliques, deep abs",
+   about:"Anti-rotation exercise: pressing a cable or band straight out from the chest while resisting being pulled sideways.",
+   steps:["Stand side-on to a cable or band set at chest height, holding the handle at your chest.","Press the handle straight out in front.","Hold for a moment, resisting rotation, then bring it back."],
+   cues:["Hips and shoulders stay square","It's about not rotating, not about the weight"],
+   mistakes:["Twisting toward the machine","Standing too close (too little tension)"]},
+  cs:{name:"Pallof press",muscles:"Šikmé svaly, hluboké břišní svaly",
+   about:"Cvik proti rotaci: tlačíš lano nebo gumu od hrudníku rovně vpřed a bráníš se vytočení do strany.",
+   steps:["Stoupni si bokem ke kladce nebo gumě ve výšce hrudníku, madlo drž u hrudníku.","Vytlač madlo rovně před sebe.","Chvíli vydrž a nenech se vytočit, pak ho vrať."],
+   cues:["Boky i ramena zůstávají rovně","Jde o to nevytočit se, ne o váhu"],
+   mistakes:["Vytáčení ke stroji","Stojíš moc blízko (malé napětí)"]}},
+
+ // ---------------- CONDITIONING ----------------
+ {id:"kb-swing",cat:"cond",equip:"kb",level:0,kb:true,src:["sfHinge","wikiKB"],
+  en:{name:"Kettlebell Swing",muscles:"Glutes, hamstrings, core, grip",
+   about:"A ballistic hip hinge that swings the kettlebell forward with a powerful hip snap. Russian (hardstyle) swing goes to about chest–shoulder height; American swing goes overhead.",
+   steps:["Feet about shoulder width, kettlebell a little in front of you.","Hinge and grab the bell, hike it back between the legs like a football snap.","Snap the hips forward to stand tall — the bell floats up from hip power, the arms just guide it.","Let the bell fall back, hinge as the forearms meet the thighs, and repeat."],
+   cues:["It's a hinge, not a squat — hips go back, knees bend only a little","Arms are ropes, hips do the work","Stand tall like a plank at the top"],
+   mistakes:["Squatting the swing","Lifting the bell with the shoulders","Leaning back at the top","Rounding the back at the bottom"]},
+  cs:{name:"Kettlebell swing (švih)",muscles:"Hýždě, hamstringy, střed těla, úchop",
+   about:"Švihový pohyb v kyčlích, kdy kettlebell vyletí dopředu díky prudkému propnutí boků. Ruský (hardstyle) swing jde zhruba do výšky hrudníku až ramen, americký nad hlavu.",
+   steps:["Chodidla zhruba na šířku ramen, kettlebell kousek před tebou.","Předkloň se v kyčlích, chyť kettlebell a „podej“ ho dozadu mezi nohy.","Prudce propni boky do vzpřímeného stoje — kettlebell vyletí díky bokům, ruce ho jen vedou.","Nech kettlebell padat zpět, předkloň se ve chvíli, kdy se předloktí dotknou stehen, a opakuj."],
+   cues:["Je to předklon v kyčlích, ne dřep — boky dozadu, kolena se pokrčí jen trochu","Ruce jsou lana, práci dělají boky","Nahoře stůj zpevněný jako prkno"],
+   mistakes:["Dřepování swingu","Zvedání kettlebellu rameny","Záklon nahoře","Kulatá záda dole"]}},
+ {id:"burpee",cat:"cond",equip:"bw",level:0,
+  en:{name:"Burpee",muscles:"Full body",
+   about:"Drop to the floor with chest to the ground, then jump back up. A staple of conditioning workouts.",
+   steps:["From standing, place your hands on the floor and jump or step the feet back.","Lower the chest to the floor.","Push up, jump or step the feet back toward the hands.","Stand up and jump with a small clap overhead."],
+   cues:["Find a pace you can keep"],
+   mistakes:["Lower back sagging on the way down and up"],
+   scale:"Easier: step back instead of jumping, skip the chest-to-floor. Variation — burpee over KB: after each burpee, jump sideways over a kettlebell lying on the floor."},
+  cs:{name:"Angličák (burpee)",muscles:"Celé tělo",
+   about:"Lehnutí hrudníkem na zem a výskok zpět nahoru. Základ kondičních tréninků.",
+   steps:["Ze stoje polož ruce na zem a odskoč nebo ustup nohama dozadu.","Polož hrudník na zem.","Vytlač se, přiskoč nebo přistup nohama k rukám.","Postav se a vyskoč s malým tlesknutím nad hlavou."],
+   cues:["Najdi tempo, které udržíš"],
+   mistakes:["Prověšená bedra při lehání i zvedání"],
+   scale:"Lehčí: krok dozadu místo skoku, bez lehnutí na zem. Varianta — angličák přes kettlebell: po každém angličáku přeskoč bokem kettlebell ležící na zemi."}},
+ {id:"box-jump",cat:"cond",equip:"box",level:1,src:["onnitBox"],
+  en:{name:"Box Jump",muscles:"Quads, glutes, calves",
+   about:"Jumping from the floor onto a box and standing tall on top.",
+   steps:["Stand a short distance from the box, feet hip width.","Swing the arms and dip into a quarter squat.","Jump and land softly on the whole foot.","Stand up fully, then step down rather than jumping down."],
+   cues:["Land quietly","Step down — jumping down puts much more stress on the Achilles"],
+   mistakes:["Box too high — landing in a very deep squat","Knees caving on landing","Rebounding off the floor for high reps when tired"]},
+  cs:{name:"Výskoky na bednu",muscles:"Kvadricepsy, hýždě, lýtka",
+   about:"Výskok ze země na bednu a vzpřímení nahoře.",
+   steps:["Stoupni si kousek od bedny, chodidla na šířku boků.","Švihni pažemi a podřepni do čtvrtdřepu.","Vyskoč a měkce dopadni celým chodidlem.","Plně se vzpřim a pak sestup dolů — neseskakuj."],
+   cues:["Dopad potichu","Sestupuj — seskok víc zatěžuje Achillovky"],
+   mistakes:["Příliš vysoká bedna — dopad do hlubokého dřepu","Kolena padají při dopadu dovnitř","Odrážení ze země na mnoho opakování v únavě"]}},
+ {id:"thruster",cat:"cond",equip:"bbdbkb",level:1,kb:true,
+  en:{name:"Thruster",muscles:"Quads, glutes, shoulders, triceps",
+   about:"A front squat flowing straight into an overhead press in one movement.",
+   steps:["Bar in the front rack.","Front squat down.","Drive up hard and use that momentum to press the bar overhead.","Lower the bar back to the shoulders as you descend into the next squat."],
+   cues:["The press starts from the legs","Elbows up in the squat"],
+   mistakes:["Pausing at the top of the squat and pressing with the arms only","Bar going forward instead of straight up"]},
+  cs:{name:"Thruster",muscles:"Kvadricepsy, hýždě, ramena, tricepsy",
+   about:"Čelní dřep plynule přecházející v tlak nad hlavu v jednom pohybu.",
+   steps:["Osa v čelní pozici na ramenou.","Čelní dřep dolů.","Prudce se vytlač nahoru a s využitím švihu vytlač osu nad hlavu.","Při dalším dřepu vracíš osu zpět na ramena."],
+   cues:["Tlak začíná z nohou","V dřepu lokty nahoře"],
+   mistakes:["Zastavení po dřepu a tlak jen rukama","Osa jde dopředu místo nahoru"]}},
+ {id:"wall-ball",cat:"cond",equip:"medball",level:0,src:["cfWall","cfGamesWB"],
+  en:{name:"Wall Ball",muscles:"Quads, glutes, shoulders",
+   about:"A front squat with a medicine ball held at the chest, followed by a throw to a target on the wall. CrossFit standard: 9 kg ball to 3 m (10 ft) for men, 6 kg to 2.7 m (9 ft) for women.",
+   steps:["Stand about an arm's length from the wall, ball at the chest.","Squat until the hip crease is below the knee.","Drive up and throw the ball to the target.","Catch it and go straight into the next squat."],
+   cues:["Catch high, absorb into the squat","Legs throw the ball — arms finish it"],
+   mistakes:["Squat not deep enough","Throwing with the arms only","Standing too far from the wall"]},
+  cs:{name:"Wall ball",muscles:"Kvadricepsy, hýždě, ramena",
+   about:"Čelní dřep s medicinbalem u hrudníku a hod na terč na zdi. Standard CrossFitu: muži 9 kg na 3 m (10 ft), ženy 6 kg na 2,7 m (9 ft).",
+   steps:["Stůj asi na délku paže od zdi, míč u hrudníku.","Jdi do dřepu, až je kyčelní ohyb pod koleny.","Vytlač se nahoru a hoď míč na terč.","Chyť ho a plynule jdi do dalšího dřepu."],
+   cues:["Chytej vysoko, zbrzdi do dřepu","Míč hází nohy — ruce jen dokončí"],
+   mistakes:["Nedostatečně hluboký dřep","Hod jen rukama","Stojíš příliš daleko od zdi"]}},
+ {id:"row-erg",cat:"cond",equip:"rower",level:0,src:["brRow","c2Row"],
+  en:{name:"Rowing Machine",muscles:"Legs, back, arms",
+   about:"Full-body cardio. Most of the power comes from the legs.",
+   steps:["Catch: shins vertical, arms straight, leaning slightly forward from the hips.","Drive: push with the legs; once they're nearly straight, swing the torso back; finish by pulling the handle to the lower ribs.","Recovery: arms away, torso forward, then bend the knees — the drive in reverse."],
+   cues:["Legs – body – arms, then arms – body – legs","Roughly 60% legs, 30% body, 10% arms (British Rowing)","Quick drive, slower recovery"],
+   mistakes:["Pulling with the arms first","Bending the knees before the hands have passed them on the recovery","Rushing back up the slide"]},
+  cs:{name:"Veslovací trenažér",muscles:"Nohy, záda, paže",
+   about:"Kardio pro celé tělo. Většina síly jde z nohou.",
+   steps:["Zahájení (catch): holeně svisle, paže propnuté, mírný předklon v kyčlích.","Záběr: odtlač se nohama; až jsou skoro propnuté, zakloň trup; nakonec přitáhni madlo ke spodním žebrům.","Návrat: paže dopředu, trup dopředu, pak pokrč kolena — záběr pozpátku."],
+   cues:["Nohy – trup – paže, pak paže – trup – nohy","Zhruba 60 % nohy, 30 % trup, 10 % paže (British Rowing)","Rychlý záběr, pomalejší návrat"],
+   mistakes:["Táhneš nejdřív rukama","Krčíš kolena dřív, než přes ně při návratu přejdou ruce","Spěcháš zpět po kolejnici"]}},
+ {id:"farmer",cat:"cond",equip:"dbkb",level:0,kb:true,
+  en:{name:"Farmer's Carry",muscles:"Grip, traps, core, legs",
+   about:"Walking with a heavy weight in each hand.",
+   steps:["Pick the weights up like a deadlift — flat back.","Stand tall, shoulders back and down.","Walk with short, controlled steps for distance or time."],
+   cues:["Tall posture","Crush the handles"],
+   mistakes:["Leaning or shrugging","Picking up the weights with a rounded back"]},
+  cs:{name:"Farmářská chůze",muscles:"Úchop, trapézy, střed těla, nohy",
+   about:"Chůze s těžkým závažím v každé ruce.",
+   steps:["Zvedni závaží jako při mrtvém tahu — rovná záda.","Stůj vzpřímeně, ramena dozadu a dolů.","Jdi krátkými kontrolovanými kroky na vzdálenost nebo čas."],
+   cues:["Vzpřímený postoj","Drť madla"],
+   mistakes:["Naklánění nebo krčení ramen","Zvedání závaží s kulatými zády"]}},
+ {id:"double-under",cat:"cond",equip:"rope",level:2,
+  en:{name:"Double-under",muscles:"Calves, shoulders, coordination",
+   about:"The rope passes under the feet twice per jump. Single-unders are the regular version.",
+   steps:["Hold the handles at hip height, elbows close to the body.","Jump a little higher than for singles, staying on the balls of the feet.","Spin the rope fast with the wrists, not the arms."],
+   cues:["Wrists, not arms","Stay tall, no piking"],
+   mistakes:["Kicking the legs back (\"donkey kick\")","Big arm circles"],
+   scale:"Common substitute in workouts: 2–3 single-unders for each double-under prescribed."},
+  cs:{name:"Dvojšvihy (double-under)",muscles:"Lýtka, ramena, koordinace",
+   about:"Švihadlo projde pod nohama dvakrát během jednoho výskoku. Jednoduché přeskoky jsou běžná verze.",
+   steps:["Drž rukojeti ve výšce boků, lokty u těla.","Skákej o kousek výš než při jednoduchých, na přední části chodidel.","Toč švihadlem rychle zápěstími, ne celými pažemi."],
+   cues:["Zápěstí, ne paže","Zůstaň rovný, nekrč nohy"],
+   mistakes:["Kopání nohama dozadu","Velké kroužení pažemi"],
+   scale:"Běžná náhrada v tréninku: 2–3 jednoduché přeskoky za každý předepsaný dvojšvih."}},
+ {id:"air-bike",cat:"cond",equip:"airbike",level:0,
+  en:{name:"Air Bike",muscles:"Legs, arms, whole body (cardio)",
+   about:"A fan bike where you push and pull the handles while pedalling. Resistance rises the harder you go, so it suits both short sprints and steady work.",
+   steps:["Set the seat so the knee is slightly bent at the bottom of the pedal stroke.","Push and pull the handles while you pedal — the arms and legs work together.","For sprints, go hard from the first second; for steady work, keep a pace you could hold for minutes."],
+   cues:["Sit tall, brace the core","Push AND pull with the arms"],
+   mistakes:["Seat too low","Only using the legs"]},
+  cs:{name:"Air bike (větrníkové kolo)",muscles:"Nohy, paže, celé tělo (kardio)",
+   about:"Kolo s větrníkem, kde při šlapání zároveň tlačíš a táhneš madla. Odpor roste s úsilím, takže se hodí na krátké sprinty i delší stálé tempo.",
+   steps:["Nastav sedlo tak, aby bylo koleno ve spodní poloze pedálu lehce pokrčené.","Při šlapání tlač a táhni madla — paže a nohy pracují spolu.","Na sprint jeď naplno od první sekundy; při stálém tempu drž rychlost, kterou vydržíš několik minut."],
+   cues:["Seď vzpřímeně, zpevni trup","Madla tlač I táhni"],
+   mistakes:["Příliš nízké sedlo","Šlapání jen nohama"]}},
+ {id:"v-ups",cat:"core",equip:"bw",level:1,
+  en:{name:"V-ups",muscles:"Abs, hip flexors",
+   about:"From lying flat, lift arms and legs at the same time to meet above the hips, forming a V.",
+   steps:["Lie on your back, arms overhead, legs straight.","Brace, then lift straight legs and arms together, reaching hands toward the feet.","Balance briefly on the seat at the top, then lower under control."],
+   cues:["Move both ends at the same time","Control the way down"],
+   mistakes:["Flopping back to the floor","Bending the knees a lot to cheat the range"],
+   scale:"Easier: tuck-ups (bend the knees) or single-leg V-ups."},
+  cs:{name:"V-sedy (V-ups)",muscles:"Břišní svaly, flexory kyčle",
+   about:"Z lehu zvedneš současně paže i nohy, aby se potkaly nad boky a tělo vytvořilo V.",
+   steps:["Lehni si na záda, paže za hlavou, nohy propnuté.","Zpevni se a zvedni současně propnuté nohy i paže, rukama se natahuj k chodidlům.","Nahoře krátce balancuj na hýždích, pak kontrolovaně spouštěj."],
+   cues:["Oba konce se hýbou zároveň","Kontrolovaný návrat"],
+   mistakes:["Padání zpět na zem","Velké pokrčení kolen pro zkrácení rozsahu"],
+   scale:"Lehčí: přitahování kolen (tuck-ups) nebo V-sedy s jednou nohou."}},
+
+ // ---------------- KETTLEBELL ----------------
+ {id:"kb-deadlift",cat:"legs",equip:"kb",level:0,kb:true,
+  en:{name:"Kettlebell Deadlift",muscles:"Glutes, hamstrings, back extensors, grip",
+   about:"A deadlift with the kettlebell between the feet. The usual first step to learning the hip hinge before the swing.",
+   steps:["Stand with the kettlebell between your feet, in line with the ankles.","Push the hips back, keep the back flat, and grip the handle with both hands.","Squeeze the handle, pull the shoulders down, and stand up by driving the hips forward.","Lower it the same way — hips back first."],
+   cues:["Hips back, not down","Long spine, chest proud"],
+   mistakes:["Rounding the back to reach the bell","Squatting it up instead of hinging"]},
+  cs:{name:"Mrtvý tah s kettlebellem",muscles:"Hýždě, hamstringy, vzpřimovače, úchop",
+   about:"Mrtvý tah s kettlebellem mezi chodidly. Obvyklý první krok k naučení předklonu v kyčlích před swingem.",
+   steps:["Stoupni si s kettlebellem mezi chodidly, v úrovni kotníků.","Posílej boky dozadu, záda rovná, a chyť madlo oběma rukama.","Stiskni madlo, stáhni ramena dolů a vstaň vytlačením boků dopředu.","Stejně ho polož — nejdřív boky dozadu."],
+   cues:["Boky dozadu, ne dolů","Dlouhá páteř, hrudník vpřed"],
+   mistakes:["Kulacení zad, abys dosáhl na kettlebell","Dřepování místo předklonu v kyčlích"]}},
+ {id:"kb-swing-1h",cat:"cond",equip:"kb",level:1,kb:true,src:["sfHinge"],
+  en:{name:"One-Arm Kettlebell Swing",muscles:"Glutes, hamstrings, core, grip, shoulder stability",
+   about:"The swing with one hand. The body must also resist rotating, and it's the base for the clean and the snatch.",
+   steps:["Set up like the two-hand swing, gripping the handle with one hand.","Hike the bell back high between the legs.","Snap the hips forward; the bell floats to about chest height.","Keep the shoulders square — don't let the bell twist you."],
+   cues:["Same hinge as the two-hand swing","Free arm can mirror the working arm"],
+   mistakes:["Rotating the torso with the bell","Shoulder pulled forward out of its socket at the top"]},
+  cs:{name:"Jednoruční swing",muscles:"Hýždě, hamstringy, střed těla, úchop, stabilita ramene",
+   about:"Swing jednou rukou. Tělo se navíc musí bránit vytočení a je to základ pro přemístění i trh.",
+   steps:["Postav se jako u obouručního swingu, madlo drž jednou rukou.","Podej kettlebell vysoko dozadu mezi nohy.","Prudce propni boky; kettlebell vyletí zhruba do výšky hrudníku.","Ramena drž rovně — nenech se kettlebellem vytočit."],
+   cues:["Stejný předklon v kyčlích jako u obouručního swingu","Volná ruka může kopírovat pracující"],
+   mistakes:["Rotace trupu s kettlebellem","Rameno vytažené nahoře dopředu"]}},
+ {id:"kb-clean",cat:"cond",equip:"kb",level:1,kb:true,src:["hkKB","ltClean","kwClean"],
+  en:{name:"Kettlebell Clean",muscles:"Glutes, hamstrings, upper back, grip",
+   about:"Bringing the kettlebell from between the legs to the rack position at the chest in one hip-driven movement. It's how you get the bell into position for presses, jerks and front squats.",
+   steps:["Start like a one-arm swing: hike the bell back between the legs.","Drive the hips forward, but keep the bell close to the body — it travels up, not out in an arc.","As it rises, slide the hand around and through the handle early, so the bell rolls around the wrist instead of flipping over it.","Finish in the rack: wrist neutral, elbow close to the ribs, bell resting softly against the forearm and upper arm, torso tall.","To repeat, drop the bell back into the backswing and hinge."],
+   cues:["It's a swing that ends in the rack","Hips power it, the arm only guides it","Around the hand, not over it"],
+   mistakes:["Bell banging on the forearm (usually late hand insertion or a wide arc)","Curling it up with the biceps","Wrist bent back in the rack","Leaning back to hold the bell"]},
+  cs:{name:"Přemístění kettlebellu (clean)",muscles:"Hýždě, hamstringy, horní záda, úchop",
+   about:"Přenesení kettlebellu mezi nohama do pozice u hrudníku (rack) jedním pohybem z boků. Takhle se kettlebell dostane do pozice pro tlaky, jerky a čelní dřepy.",
+   steps:["Začni jako jednoruční swing: podej kettlebell dozadu mezi nohy.","Vytlač boky dopředu, ale kettlebell drž blízko těla — jde nahoru, ne v oblouku ven.","Jak stoupá, včas zasuň ruku kolem a skrz madlo, aby se kettlebell převalil kolem zápěstí a nepřepadl přes něj.","Skonči v racku: zápěstí rovné, loket u žeber, kettlebell měkce opřený o předloktí a paži, trup vzpřímený.","Při opakování nech kettlebell spadnout zpět do zášvihu a předkloň se v kyčlích."],
+   cues:["Je to swing, který končí v racku","Pohon z boků, ruka jen vede","Kolem ruky, ne přes ni"],
+   mistakes:["Kettlebell tluče do předloktí (obvykle pozdní zasunutí ruky nebo široký oblouk)","Zvedání bicepsem","Zalomené zápěstí v racku","Záklon, abys kettlebell udržel"]}},
+ {id:"squat-clean-kb",cat:"cond",equip:"kb",level:1,kb:true,
+  en:{name:"Kettlebell Squat Clean",muscles:"Legs, glutes, upper back, core",
+   about:"A kettlebell clean followed straight by a front squat with the bell in the rack. Gyms use the name a little differently — some mean receiving the clean directly in a squat — so check what your coach means.",
+   steps:["Clean the kettlebell into the rack position.","Without pausing, squat down with the bell held in the rack, elbow tucked.","Stand up, then drop the bell into the next backswing."],
+   cues:["Own the rack before you squat","Chest up in the squat"],
+   mistakes:["Squatting before the bell has settled in the rack","Elbow flaring out so the bell pulls you forward"]},
+  cs:{name:"Přemístění do dřepu (squat clean)",muscles:"Nohy, hýždě, horní záda, střed těla",
+   about:"Přemístění kettlebellu hned následované čelním dřepem s kettlebellem v racku. Posilovny ten název používají trochu různě — někdy znamená chycení přemístění přímo v dřepu — tak si ověř, co tím myslí tvůj trenér.",
+   steps:["Přemísti kettlebell do racku.","Bez pauzy jdi do dřepu s kettlebellem v racku, loket u těla.","Vstaň a pak nech kettlebell spadnout do dalšího zášvihu."],
+   cues:["Nejdřív stabilní rack, pak dřep","V dřepu hrudník nahoru"],
+   mistakes:["Dřep dřív, než se kettlebell usadí v racku","Loket ujíždí do strany a kettlebell tě táhne dopředu"]}},
+ {id:"kb-press",cat:"push",equip:"kb",level:1,kb:true,
+  en:{name:"Kettlebell Strict Press",muscles:"Shoulders, triceps, upper back, core",
+   about:"Pressing a kettlebell from the rack to overhead without help from the legs. Usually done one arm at a time.",
+   steps:["Clean the bell to the rack. Squeeze the glutes and brace.","Press the bell up, keeping the forearm vertical under it.","Finish with the arm locked, biceps near the ear, bell over the shoulder.","Lower under control back to the rack."],
+   cues:["Whole body tight — legs, glutes, abs","Forearm stays vertical"],
+   mistakes:["Leaning back or sideways","Bending the knees for drive (that's a push press)","Wrist bent back under the load"]},
+  cs:{name:"Striktní tlak kettlebellu",muscles:"Ramena, tricepsy, horní záda, střed těla",
+   about:"Tlak kettlebellu z racku nad hlavu bez pomoci nohou. Obvykle jednou rukou.",
+   steps:["Přemísti kettlebell do racku. Zatni hýždě a zpevni trup.","Vytlač kettlebell nahoru, předloktí zůstává pod ním svisle.","Skonči se zamčenou paží, biceps u ucha, kettlebell nad ramenem.","Kontrolovaně spusť zpět do racku."],
+   cues:["Celé tělo zpevněné — nohy, hýždě, břicho","Předloktí svisle"],
+   mistakes:["Záklon nebo úklon","Pokrčení kolen pro švih (to je push press)","Zalomené zápěstí pod zátěží"]}},
+ {id:"kb-push-press",cat:"push",equip:"kb",level:1,kb:true,
+  en:{name:"Kettlebell Push Press",muscles:"Shoulders, triceps, legs, core",
+   about:"A press helped by a short dip and drive from the legs. Lets you move more weight overhead than a strict press.",
+   steps:["Bell in the rack, feet about hip width.","Dip a few centimetres by bending the knees, torso upright.","Drive up hard with the legs and use that momentum to press the bell overhead.","Lock out, then lower to the rack."],
+   cues:["Short, fast dip — straight down","Legs start it, arms finish it"],
+   mistakes:["Dip too deep or leaning forward in the dip","Pressing before the legs have finished driving"]},
+  cs:{name:"Push press s kettlebellem",muscles:"Ramena, tricepsy, nohy, střed těla",
+   about:"Tlak s pomocí krátkého podřepu a odrazu z nohou. Umožní dostat nad hlavu víc váhy než striktní tlak.",
+   steps:["Kettlebell v racku, chodidla zhruba na šířku boků.","Podřepni o pár centimetrů pokrčením kolen, trup vzpřímený.","Prudce se odraz nohama a s využitím švihu vytlač kettlebell nad hlavu.","Zamkni paži a spusť zpět do racku."],
+   cues:["Krátký, rychlý podřep — rovně dolů","Nohy začnou, ruce dokončí"],
+   mistakes:["Moc hluboký podřep nebo předklon v podřepu","Tlak rukou dřív, než nohy dokončí odraz"]}},
+ {id:"kb-jerk",cat:"push",equip:"kb",level:2,kb:true,src:["bmJerk","wikiGS"],
+  en:{name:"Kettlebell Jerk",muscles:"Legs, shoulders, triceps, core",
+   about:"A main kettlebell-sport lift: the bell goes from the rack to overhead using two knee dips. Unlike the push press, you drop under the bell in a second dip and then stand up with it locked out. Done with one or two bells.",
+   steps:["Rack: elbows resting on or close to the hips, legs relaxed.","First dip: short, quick knee bend while the elbows stay connected to the body.","Bump: drive the legs explosively straight — the bell is launched by the legs, not the arms.","Second dip: as the arms lock out, drop quickly under the bell by bending the knees again.","Fixation: stand up straight with the arms locked and hold still for a moment.","Drop the bell back to the rack, absorbing it with the legs."],
+   cues:["Arms are passive — legs do the work","Breathe on every phase; never hold your breath overhead"],
+   mistakes:["Pressing out with the arms instead of dropping under","Skipping the full fixation at the top","Holding the breath during a long set"]},
+  cs:{name:"Jerk (vzpor) s kettlebellem",muscles:"Nohy, ramena, tricepsy, střed těla",
+   about:"Hlavní disciplína kettlebellového sportu: kettlebell jde z racku nad hlavu pomocí dvou podřepů. Na rozdíl od push pressu se ve druhém podřepu dostaneš pod kettlebell a pak se s ním postavíš se zamčenýma rukama. S jedním nebo dvěma kettlebelly.",
+   steps:["Rack: lokty opřené o boky nebo těsně u nich, nohy uvolněné.","První podřep: krátké a rychlé pokrčení kolen, lokty zůstávají u těla.","Odraz: výbušně propni nohy — kettlebell vystřelí díky nohám, ne rukám.","Druhý podřep: ve chvíli, kdy se paže zamykají, rychle znovu podřepni pod kettlebell.","Fixace: postav se rovně se zamčenými pažemi a chvilku vydrž v klidu.","Spusť kettlebell zpět do racku a ztlum ho nohama."],
+   cues:["Ruce jsou pasivní — práci dělají nohy","Dýchej v každé fázi; nad hlavou nikdy nezadržuj dech"],
+   mistakes:["Dotlačování rukama místo podřepnutí","Vynechaná plná fixace nahoře","Zadržování dechu během dlouhé série"]}},
+ {id:"long-cycle",cat:"cond",equip:"kb",level:2,kb:true,src:["wikiGS","eliteGS"],
+  en:{name:"Long Cycle (Clean & Jerk)",muscles:"Whole body",
+   about:"A clean followed by a jerk on every rep — one of the main kettlebell-sport events. In competition it's a 10-minute set for as many reps as possible without putting the bell down; with one bell, only one hand switch is allowed.",
+   steps:["Clean the bell to the rack.","Jerk it overhead (first dip, bump, second dip, fixation).","Drop it back to the rack, then into the backswing.","Clean again and repeat — find a rhythm you can hold."],
+   cues:["Pace it — it's an endurance event","Relax in the rack between reps"],
+   mistakes:["Starting too fast and fading","Gripping the handle hard on every rep","Arms doing the work in the jerk"]},
+  cs:{name:"Long cycle (dlouhý cyklus – přemístění a jerk)",muscles:"Celé tělo",
+   about:"Přemístění a jerk v každém opakování — jedna z hlavních disciplín kettlebellového sportu. V soutěži je to 10minutová série na co nejvíc opakování bez položení kettlebellu; s jedním kettlebellem je povolená jen jedna výměna ruky.",
+   steps:["Přemísti kettlebell do racku.","Jerkem ho dostaň nad hlavu (první podřep, odraz, druhý podřep, fixace).","Spusť ho zpět do racku a pak do zášvihu.","Znovu přemísti a opakuj — najdi rytmus, který udržíš."],
+   cues:["Rozvrhni si síly — je to vytrvalostní disciplína","Mezi opakováními se v racku uvolni"],
+   mistakes:["Příliš rychlý začátek a pak odpadnutí","Silné mačkání madla při každém opakování","V jerku pracují ruce"]}},
+ {id:"kb-snatch",cat:"cond",equip:"kb",level:2,kb:true,src:["kwSnatch","cwSnatch","wikiGS"],
+  en:{name:"Kettlebell Snatch",muscles:"Glutes, hamstrings, back, shoulders, grip",
+   about:"One uninterrupted movement from the backswing to overhead lockout. A main kettlebell-sport lift (one bell, 10-minute set in competition).",
+   steps:["Start with a one-arm swing backswing.","Drive the hips forward; keep the bell travelling up close to the body, not in a wide arc.","As the bell becomes weightless around chest height, punch the hand up through the handle so the bell rolls softly around the wrist.","Finish with the arm locked overhead, bell resting on the back of the forearm.","Drop it back down and into the next backswing."],
+   cues:["One smooth movement — not a clean and press","Loose grip at the top, punch through"],
+   mistakes:["Bell crashing onto the wrist (hand too late or grip too tight)","Not fully locking out overhead","Snatching before the swing, clean and press are solid"]},
+  cs:{name:"Trh kettlebellem (snatch)",muscles:"Hýždě, hamstringy, záda, ramena, úchop",
+   about:"Jeden plynulý pohyb ze zášvihu do zamčené pozice nad hlavou. Hlavní disciplína kettlebellového sportu (jeden kettlebell, v soutěži 10minutová série).",
+   steps:["Začni zášvihem jako u jednoručního swingu.","Vytlač boky dopředu; kettlebell veď nahoru blízko těla, ne v širokém oblouku.","Když kettlebell kolem výšky hrudníku „ztratí váhu“, prostrč ruku nahoru skrz madlo, aby se kettlebell měkce převalil kolem zápěstí.","Skonči se zamčenou paží nad hlavou, kettlebell leží na zadní straně předloktí.","Spusť ho dolů do dalšího zášvihu."],
+   cues:["Jeden plynulý pohyb — ne přemístění a tlak","Nahoře volný úchop a prostrčení ruky"],
+   mistakes:["Kettlebell dopadá na zápěstí (ruka pozdě nebo moc pevný úchop)","Nedotažené zamčení nad hlavou","Trh dřív, než zvládáš swing, přemístění a tlak"]}},
+ {id:"tgu",cat:"core",equip:"kb",level:1,kb:true,src:["aceTGU","nscaTGU"],
+  en:{name:"Turkish Get-Up",muscles:"Shoulders, core, hips — whole body",
+   about:"Getting from lying on the floor to standing — and back down — while holding a kettlebell locked out overhead. Slow and controlled; a strong shoulder-stability and coordination exercise.",
+   steps:["Lie on your back with the bell pressed up in one hand (say right). Bend the right knee, right foot flat; left arm and leg out at about 45°.","Roll onto the left elbow, then push up onto the left hand.","Lift the hips into a bridge.","Sweep the left leg back under you into a kneeling position.","Lift the left hand off the floor and come up to tall kneeling.","Stand up. Then reverse every step to get back down."],
+   cues:["Arm locked, eyes on the bell (until you're standing)","Each position should be stable before you move on"],
+   mistakes:["Bending the elbow of the bell arm","Rushing through the steps","Going heavy before the pattern is solid — learn it with a shoe or no weight first"]},
+  cs:{name:"Turecký vztyk (Turkish get-up)",muscles:"Ramena, střed těla, kyčle — celé tělo",
+   about:"Přechod z lehu na zemi do stoje — a zpět — s kettlebellem v propnuté paži nad sebou. Pomalý a kontrolovaný; výborný na stabilitu ramene a koordinaci.",
+   steps:["Lehni si na záda s kettlebellem vytlačeným nahoru v jedné ruce (např. pravé). Pravé koleno pokrčené, chodidlo na zemi; levá paže a noha zhruba 45° od těla.","Převal se na levý loket, pak se vytlač na levou dlaň.","Zvedni boky do mostu.","Protáhni levou nohu dozadu pod sebe do kleku.","Zvedni levou ruku ze země a narovnej se do vysokého kleku.","Postav se. Pak všechny kroky zopakuj pozpátku zpět na zem."],
+   cues:["Paže zamčená, oči na kettlebellu (dokud nestojíš)","Každá pozice musí být stabilní, než pokračuješ"],
+   mistakes:["Pokrčený loket paže s kettlebellem","Spěchání mezi kroky","Těžká váha dřív, než umíš pohyb — nauč se ho nejdřív s botou nebo bez zátěže"]}},
+ {id:"windmill",cat:"core",equip:"kb",level:2,kb:true,src:["cpWind"],
+  en:{name:"Kettlebell Windmill",muscles:"Obliques, hips, hamstrings, shoulder stability",
+   about:"With a kettlebell locked out overhead, hinge sideways to reach the opposite foot. Builds core and shoulder stability; needs good hip and hamstring mobility.",
+   steps:["Wide stance, bell locked out overhead in one hand.","Turn the foot on the free-hand side out; the other foot points forward (or slightly in).","Push the hip on the bell side out and hinge, sliding the free hand down the inside of the leg toward the turned-out foot.","Keep the bell arm vertical and your eyes on the bell.","Stand back up slowly by driving the hips."],
+   cues:["It's a hip hinge sideways, not a side bend","Bell arm stays vertical the whole time"],
+   mistakes:["Bending the bell arm","Rounding the back to reach lower","Going further than your hips allow"]},
+  cs:{name:"Větrný mlýn s kettlebellem (windmill)",muscles:"Šikmé svaly, kyčle, hamstringy, stabilita ramene",
+   about:"S kettlebellem zamčeným nad hlavou se předkloníš do strany k opačné noze. Buduje stabilitu středu těla a ramene; potřebuje dobrou pohyblivost kyčlí a hamstringů.",
+   steps:["Široký postoj, kettlebell zamčený nad hlavou v jedné ruce.","Chodidlo na straně volné ruky vytoč ven; druhé míří dopředu (nebo mírně dovnitř).","Vysuň bok na straně kettlebellu do strany a předkloň se, volnou ruku sunut po vnitřní straně nohy k vytočenému chodidlu.","Paže s kettlebellem zůstává svisle, oči sledují kettlebell.","Pomalu se vrať vytlačením boků."],
+   cues:["Je to předklon v kyčlích do strany, ne úklon","Paže s kettlebellem celou dobu svisle"],
+   mistakes:["Pokrčená paže s kettlebellem","Kulacení zad, abys došel níž","Hlouběji, než kyčle dovolí"]}},
+ {id:"halo",cat:"push",equip:"kb",level:0,kb:true,src:["slHalo","pelHalo"],
+  en:{name:"Kettlebell Halo",muscles:"Shoulders, upper back, core",
+   about:"Circling a kettlebell slowly around the head. Often used in warm-ups for shoulder mobility and core control.",
+   steps:["Hold the bell upside down by the horns in front of the chest.","Brace the core and keep the elbows fairly close.","Circle the bell around the head, keeping it close — behind the head at about neck level.","Return to the front and change direction each rep or each set."],
+   cues:["Slow and controlled","Keep the circle tight around the head"],
+   mistakes:["Huge circles","Swaying or arching the torso","Going too heavy"]},
+  cs:{name:"Halo s kettlebellem",muscles:"Ramena, horní záda, střed těla",
+   about:"Pomalé kroužení kettlebellem kolem hlavy. Často součást rozcvičky pro pohyblivost ramen a kontrolu středu těla.",
+   steps:["Drž kettlebell dnem vzhůru za rohy madla před hrudníkem.","Zpevni trup, lokty drž spíš u sebe.","Krouž kettlebellem kolem hlavy blízko ní — za hlavou zhruba ve výšce krku.","Vrať se dopředu a měň směr každé opakování nebo sérii."],
+   cues:["Pomalu a kontrolovaně","Kruh těsně kolem hlavy"],
+   mistakes:["Obrovské kruhy","Kývání nebo prohýbání trupu","Příliš velká váha"]}},
+ {id:"gorilla-row",cat:"pull",equip:"kb2",level:1,kb:true,src:["ltGorilla","gsGorilla"],
+  en:{name:"Gorilla Row",muscles:"Lats, mid/upper back, biceps, core",
+   about:"An alternating bent-over row with two kettlebells on the floor between your feet. One hand pushes a bell into the floor while the other rows.",
+   steps:["Wide stance, two kettlebells between the feet. Hinge down with a flat back and grab both handles.","Push one bell into the floor and brace.","Row the other bell until the elbow is by your ribs, then lower it to the floor.","Alternate sides. Hips and torso stay at the same height."],
+   cues:["Push one, pull the other","Elbow toward the hip, close to the body"],
+   mistakes:["Hips rising as you get tired","Twisting to heave the bell up","Rounded back"]},
+  cs:{name:"Gorilí přítahy (gorilla row)",muscles:"Široký sval zádový, střední a horní záda, bicepsy, střed těla",
+   about:"Střídavé přítahy v předklonu se dvěma kettlebelly na zemi mezi chodidly. Jedna ruka tlačí kettlebell do země, druhá přitahuje.",
+   steps:["Široký postoj, dva kettlebelly mezi chodidly. Předkloň se s rovnými zády a chyť obě madla.","Jeden kettlebell zatlač do země a zpevni se.","Druhý přitáhni, až je loket u žeber, a polož ho zpět na zem.","Střídej strany. Boky i trup zůstávají ve stejné výšce."],
+   cues:["Jeden tlač, druhý táhni","Loket k boku, blízko těla"],
+   mistakes:["Boky se s únavou zvedají","Vytáčení trupu, abys kettlebell vyhodil","Kulatá záda"]}},
+ {id:"kb-front-squat",cat:"legs",equip:"kb",level:1,kb:true,
+  en:{name:"Kettlebell Front Squat",muscles:"Quads, glutes, upper back, core",
+   about:"A squat with one or two kettlebells in the rack position. Harder on the upper back and core than a goblet squat.",
+   steps:["Clean the bell(s) to the rack. Elbows tucked, wrists neutral.","Feet about shoulder width.","Squat down keeping the chest up and the bells tight to the body.","Stand up and stay tall at the top."],
+   cues:["Elbows in, chest up","Bells stay glued to the body"],
+   mistakes:["Elbows flaring so the bells pull you forward","Upper back rounding"]},
+  cs:{name:"Čelní dřep s kettlebellem",muscles:"Kvadricepsy, hýždě, horní záda, střed těla",
+   about:"Dřep s jedním nebo dvěma kettlebelly v racku. Náročnější na horní záda a střed těla než goblet dřep.",
+   steps:["Přemísti kettlebell(y) do racku. Lokty u těla, zápěstí rovně.","Chodidla zhruba na šířku ramen.","Jdi do dřepu, hrudník nahoře, kettlebelly přitisknuté k tělu.","Vstaň a nahoře zůstaň vzpřímený."],
+   cues:["Lokty k sobě, hrudník nahoru","Kettlebelly přilepené k tělu"],
+   mistakes:["Lokty ujíždějí do stran a kettlebelly tě táhnou dopředu","Kulatá horní záda"]}},
+ {id:"kb-jump-squat",cat:"legs",equip:"kb",level:1,kb:true,
+  en:{name:"Kettlebell Jump Squat",muscles:"Quads, glutes, calves",
+   about:"A squat jump holding a kettlebell — usually goblet-style at the chest, or hanging between the legs. Trains leg power.",
+   steps:["Hold the bell at the chest (or by the handle between the legs).","Squat to a comfortable depth.","Jump explosively, keeping the bell close.","Land softly and go straight into the next squat."],
+   cues:["Land quietly","Use a light bell — speed matters more than weight"],
+   mistakes:["Too heavy, so the jump turns into a calf raise","Knees caving on landing"]},
+  cs:{name:"Výskoky z dřepu s kettlebellem",muscles:"Kvadricepsy, hýždě, lýtka",
+   about:"Výskok z dřepu s kettlebellem — obvykle drženým u hrudníku jako u goblet dřepu, nebo visícím mezi nohama. Trénuje výbušnost nohou.",
+   steps:["Drž kettlebell u hrudníku (nebo za madlo mezi nohama).","Jdi do dřepu do pohodlné hloubky.","Výbušně vyskoč, kettlebell drž blízko těla.","Měkce dopadni a plynule pokračuj do dalšího dřepu."],
+   cues:["Dopad potichu","Lehký kettlebell — rychlost je důležitější než váha"],
+   mistakes:["Moc těžký kettlebell, ze skoku je jen výpon","Kolena padají při dopadu dovnitř"]}}
+];
+
+/* ============================================================
+   TERMS — en + cs
+   ============================================================ */
+const TERMS = [
+ {abbr:"AMRAP",cat:"format",src:["cfTerms"],
+  en:{name:"As Many Rounds (or Reps) As Possible",def:"Do as many rounds or reps of a set workout as you can within a fixed time. Score is total rounds + extra reps.",ex:"12-min AMRAP:\n10 kettlebell swings\n10 box jumps\n10 push-ups\n→ Score: e.g. 6 rounds + 14 reps"},
+  cs:{name:"Co nejvíc kol (nebo opakování)",def:"Za pevně daný čas uděláš co nejvíc kol nebo opakování zadaného tréninku. Výsledek = počet kol + opakování navíc.",ex:"AMRAP 12 min:\n10× kettlebell swing\n10× výskok na bednu\n10× klik\n→ Výsledek: např. 6 kol + 14 opakování"}},
+ {abbr:"EMOM",cat:"format",src:["cfTerms"],
+  en:{name:"Every Minute On the Minute",def:"At the start of every minute you do a set amount of work; whatever time is left in that minute is rest. Variants: E2MOM (every 2 minutes) etc.",ex:"10-min EMOM:\n5 pull-ups + 10 air squats\n→ Finish in 35 s, rest 25 s."},
+  cs:{name:"Každou minutu na začátku minuty",def:"Na začátku každé minuty uděláš zadanou práci; zbytek minuty je pauza. Varianty: E2MOM (každé 2 minuty) apod.",ex:"EMOM 10 min:\n5 shybů + 10 dřepů\n→ Hotovo za 35 s, pauza 25 s."}},
+ {abbr:"For Time",cat:"format",
+  en:{name:"For Time / RFT (Rounds For Time)",def:"Complete a set amount of work as fast as possible. Score is the finishing time. Often has a time cap.",ex:"3 rounds for time:\n400 m run\n21 kettlebell swings\n12 pull-ups"},
+  cs:{name:"Na čas / RFT (kola na čas)",def:"Zadanou práci uděláš co nejrychleji. Výsledek je čas. Často má časový limit.",ex:"3 kola na čas:\n400 m běh\n21× kettlebell swing\n12 shybů"}},
+ {abbr:"Tabata",cat:"format",src:["cfTerms","tabataRits","tabataRev"],
+  en:{name:"Tabata intervals",def:"8 rounds of 20 s work / 10 s rest — 4 minutes total. In the original 1996 study (Izumi Tabata, speed skaters) it was done all-out on a bike at very high intensity; today the name is used for any 20/10 interval workout. In CrossFit the score is often the lowest number of reps in any round.",ex:"Tabata air squats: 8 × (20 s work / 10 s rest)"},
+  cs:{name:"Tabata intervaly",def:"8 kol po 20 s práce / 10 s pauzy — celkem 4 minuty. V původní studii z roku 1996 (Izumi Tabata, rychlobruslaři) šlo o maximální úsilí na kole ve velmi vysoké intenzitě; dnes se tak říká jakémukoli intervalu 20/10. V CrossFitu bývá výsledkem nejnižší počet opakování v jednom kole.",ex:"Tabata dřepy: 8 × (20 s práce / 10 s pauza)"}},
+ {abbr:"Chipper",cat:"format",
+  en:{name:"Chipper",def:"A long workout with many different exercises, each done once in order — you 'chip away' at the list.",ex:"50 wall balls, 40 box jumps, 30 KB swings, 20 burpees, 10 pull-ups"},
+  cs:{name:"Chipper",def:"Dlouhý trénink s mnoha různými cviky, každý se udělá jednou v daném pořadí — seznam postupně „ukrajuješ“.",ex:"50 wall ballů, 40 výskoků na bednu, 30 swingů, 20 angličáků, 10 shybů"}},
+ {abbr:"Ladder",cat:"format",
+  en:{name:"Ladder",def:"Reps go up (or down) each round, e.g. 1, 2, 3, 4… Can be ascending, descending, or both."},
+  cs:{name:"Žebřík",def:"Počet opakování se každé kolo zvyšuje (nebo snižuje), např. 1, 2, 3, 4… Může být vzestupný, sestupný nebo obojí."}},
+ {abbr:"Death by…",cat:"format",
+  en:{name:"Death by",def:"An EMOM where reps increase by one each minute (1 in minute 1, 2 in minute 2…) until you can't finish them within the minute."},
+  cs:{name:"Death by",def:"EMOM, kde každou minutu přibude jedno opakování (1 v první minutě, 2 ve druhé…), dokud to v rámci minuty nestihneš."}},
+ {abbr:"Circuit",cat:"format",
+  en:{name:"Circuit training",def:"Several exercises done back-to-back with little rest, then repeated for a number of rounds."},
+  cs:{name:"Kruhový trénink",def:"Několik cviků za sebou s minimální pauzou, celé se to opakuje v několika kolech."}},
+ {abbr:"WOD",cat:"format",src:["cfTerms"],
+  en:{name:"Workout Of the Day",def:"The prescribed workout for a given day — a CrossFit term."},
+  cs:{name:"Trénink dne",def:"Předepsaný trénink pro daný den — pojem z CrossFitu."}},
+ {abbr:"Metcon",cat:"format",
+  en:{name:"Metabolic conditioning",def:"A workout aimed at conditioning — usually moderate-to-high intensity with short rests, e.g. AMRAPs and For Time workouts."},
+  cs:{name:"Metabolická kondice",def:"Trénink zaměřený na kondici — obvykle střední až vysoká intenzita s krátkými pauzami, např. AMRAP nebo trénink na čas."}},
+ {abbr:"HIIT",cat:"format",
+  en:{name:"High-Intensity Interval Training",def:"Alternating short bursts of hard work with periods of rest or easy work."},
+  cs:{name:"Vysoce intenzivní intervalový trénink",def:"Střídání krátkých úseků tvrdé práce s pauzou nebo lehkou aktivitou."}},
+ {abbr:"LISS",cat:"format",
+  en:{name:"Low-Intensity Steady State",def:"Long, easy, continuous cardio — e.g. 40 minutes of walking, cycling or rowing at a conversational pace."},
+  cs:{name:"Nízká intenzita, stálé tempo",def:"Dlouhé, lehké, souvislé kardio — např. 40 minut chůze, kola nebo veslování v tempu, kdy se dá mluvit."}},
+ {abbr:"Zone 2",cat:"format",src:["zone2"],
+  en:{name:"Heart-rate Zone 2",def:"Easy aerobic intensity, generally defined by experts as just below the first lactate (or ventilatory) threshold — you can still hold a conversation. There's no single agreed definition: watches and apps use different zone models, so the heart-rate numbers differ between them."},
+  cs:{name:"Zóna 2",def:"Lehká aerobní intenzita, odborníky obvykle definovaná jako těsně pod prvním laktátovým (nebo ventilačním) prahem — ještě se dá mluvit. Jednotná definice neexistuje: hodinky a aplikace používají různé modely zón, takže čísla tepové frekvence se mezi nimi liší."}},
+ {abbr:"Time cap",cat:"format",
+  en:{name:"Time cap (TC)",def:"Maximum time allowed for a For Time workout. If you don't finish, you're scored on the reps you completed."},
+  cs:{name:"Časový limit (TC)",def:"Maximální čas pro trénink na čas. Když nedokončíš, počítají se hotová opakování."}},
+ {abbr:"Buy-in / Cash-out",cat:"format",
+  en:{name:"Buy-in / Cash-out",def:"A buy-in is work you must do before the main workout starts; a cash-out is done right after it ends."},
+  cs:{name:"Buy-in / Cash-out",def:"Buy-in je práce, kterou musíš udělat před hlavním tréninkem; cash-out se dělá hned po něm."}},
+
+ {abbr:"Rep",cat:"sets",
+  en:{name:"Repetition",def:"One complete movement of an exercise."},
+  cs:{name:"Opakování",def:"Jeden celý pohyb cviku."}},
+ {abbr:"Set",cat:"sets",
+  en:{name:"Set",def:"A group of consecutive reps. \"3×10\" means 3 sets of 10 reps."},
+  cs:{name:"Série",def:"Skupina opakování za sebou. „3×10“ znamená 3 série po 10 opakováních."}},
+ {abbr:"Superset",cat:"sets",
+  en:{name:"Superset",def:"Two exercises done back-to-back with no rest between them, then rest. Often opposing muscles (e.g. bench press + row).",ex:"A1: Bench press × 8\nA2: Cable row × 10\nRest 90 s, repeat"},
+  cs:{name:"Supersérie",def:"Dva cviky hned po sobě bez pauzy, pak odpočinek. Často protilehlé svaly (např. bench press + přítahy).",ex:"A1: Bench press × 8\nA2: Přítahy kladky × 10\nPauza 90 s, opakovat"}},
+ {abbr:"Giant set",cat:"sets",
+  en:{name:"Giant set",def:"Three or more exercises done back-to-back without rest."},
+  cs:{name:"Obří série",def:"Tři a více cviků za sebou bez pauzy."}},
+ {abbr:"Drop set",cat:"sets",src:["rpDrop","nasmDrop"],
+  en:{name:"Drop set",def:"Do a set close to failure, immediately reduce the weight (about 20% is a common default; 10–30% is typical) and keep going without rest. Usually 2–3 drops."},
+  cs:{name:"Drop set (sestupná série)",def:"Série téměř do selhání, pak hned snížíš váhu (běžně asi o 20 %, obvykle 10–30 %) a bez pauzy pokračuješ. Obvykle 2–3 snížení."}},
+ {abbr:"Rest-pause",cat:"sets",
+  en:{name:"Rest-pause set",def:"Do a set close to failure, rest 10–20 seconds, then do a few more reps with the same weight. Repeat 1–3 times."},
+  cs:{name:"Rest-pause",def:"Série téměř do selhání, 10–20 s pauza a pak ještě pár opakování se stejnou váhou. Opakuj 1–3×."}},
+ {abbr:"Cluster set",cat:"sets",
+  en:{name:"Cluster set",def:"A set broken into small chunks with short rests (10–30 s) between them, allowing heavier weight or more total reps."},
+  cs:{name:"Clusterová série",def:"Série rozdělená na malé části s krátkými pauzami (10–30 s), což umožní větší váhu nebo víc opakování celkem."}},
+ {abbr:"Unbroken",cat:"sets",
+  en:{name:"Unbroken",def:"Doing all reps of a set without putting the weight down or stopping."},
+  cs:{name:"Bez přerušení",def:"Všechna opakování série bez položení závaží nebo zastavení."}},
+ {abbr:"Warm-up sets",cat:"sets",
+  en:{name:"Warm-up / ramp-up sets",def:"Lighter sets before the working sets, gradually increasing the weight to prepare the body."},
+  cs:{name:"Rozcvičovací série",def:"Lehčí série před pracovními, váha se postupně zvyšuje, aby se tělo připravilo."}},
+ {abbr:"Working sets",cat:"sets",
+  en:{name:"Working sets",def:"The sets at your target weight and effort — the ones that count."},
+  cs:{name:"Pracovní série",def:"Série v cílové váze a úsilí — ty, které se počítají."}},
+
+ {abbr:"1RM",cat:"intensity",
+  en:{name:"One-Rep Max (RM)",def:"The heaviest weight you can lift for one full rep with good form. 5RM = heaviest weight for 5 reps. Programs often prescribe weights as % of 1RM.",ex:"5 × 5 @ 75% 1RM — if your 1RM is 100 kg, use 75 kg"},
+  cs:{name:"Maximum na jedno opakování (RM)",def:"Nejtěžší váha, kterou zvedneš na jedno celé opakování v dobré technice. 5RM = nejtěžší váha na 5 opakování. Plány často zadávají váhu v % z 1RM.",ex:"5 × 5 @ 75 % 1RM — když máš 1RM 100 kg, použij 75 kg"}},
+ {abbr:"RPE",cat:"intensity",src:["helmsRIR","zourdos"],
+  en:{name:"Rate of Perceived Exertion",def:"In lifting, a 1–10 scale tied to reps in reserve: RPE 10 = maximal effort, nothing left; RPE 9 = 1 rep left; RPE 8 = 2 reps left. Accuracy improves with experience and is better close to failure.",ex:"3 × 8 @ RPE 8 → choose a weight where you'd have ~2 reps left"},
+  cs:{name:"Vnímaná námaha",def:"V posilování škála 1–10 navázaná na opakování v rezervě: RPE 10 = maximální úsilí, nic nezbývá; RPE 9 = zbývá 1 opakování; RPE 8 = zbývají 2. Přesnost roste se zkušenostmi a je lepší blízko selhání.",ex:"3 × 8 @ RPE 8 → zvol váhu, kdy by ti zbývala ~2 opakování"}},
+ {abbr:"RIR",cat:"intensity",src:["helmsRIR"],
+  en:{name:"Reps In Reserve",def:"How many more reps you could have done at the end of a set. 2 RIR ≈ RPE 8."},
+  cs:{name:"Opakování v rezervě",def:"Kolik opakování bys ještě zvládl na konci série. 2 RIR ≈ RPE 8."}},
+ {abbr:"Failure",cat:"intensity",
+  en:{name:"Training to failure",def:"Continuing a set until you can't complete another rep with good form."},
+  cs:{name:"Do selhání",def:"Série až do chvíle, kdy už nezvládneš další opakování v dobré technice."}},
+ {abbr:"PR / PB",cat:"intensity",
+  en:{name:"Personal Record / Personal Best",def:"Your best-ever result in a lift or workout."},
+  cs:{name:"Osobní rekord",def:"Tvůj nejlepší výsledek v cviku nebo tréninku."}},
+ {abbr:"Rx / Scaled",cat:"intensity",
+  en:{name:"As prescribed / Scaled",def:"Rx = doing the workout exactly as written (weights, movements). Scaled = modified to suit your level, e.g. lighter weight or easier movement."},
+  cs:{name:"Podle předpisu / Upraveno",def:"Rx = trénink přesně podle zadání (váhy, cviky). Scaled = upravený pro tvou úroveň, např. lehčí váha nebo snazší cvik."}},
+
+ {abbr:"Tempo",cat:"technique",src:["nasmTempo"],
+  en:{name:"Tempo notation (e.g. 3-1-1-0)",def:"Four numbers giving seconds for: lowering (eccentric) – pause at the bottom – lifting (concentric) – pause at the top. 'X' = as fast as possible. For lifts that start with the lifting phase (deadlift, pull-up) you start reading at the third number.",ex:"Squat @ 3-1-X-0:\n3 s down, 1 s pause at the bottom, explode up, no pause at the top"},
+  cs:{name:"Zápis tempa (např. 3-1-1-0)",def:"Čtyři čísla udávají sekundy pro: spouštění (excentrická fáze) – pauza dole – zvedání (koncentrická fáze) – pauza nahoře. „X“ = co nejrychleji. U cviků, které začínají zvedáním (mrtvý tah, shyb), začínáš číst třetím číslem.",ex:"Dřep @ 3-1-X-0:\n3 s dolů, 1 s pauza dole, výbušně nahoru, nahoře bez pauzy"}},
+ {abbr:"TUT",cat:"technique",
+  en:{name:"Time Under Tension",def:"Total time a muscle is working during a set."},
+  cs:{name:"Čas pod napětím",def:"Celkový čas, kdy sval během série pracuje."}},
+ {abbr:"Eccentric",cat:"technique",
+  en:{name:"Eccentric phase",def:"The lowering part of a lift, where the muscle lengthens under load (e.g. going down into a squat)."},
+  cs:{name:"Excentrická fáze",def:"Brzdivá část pohybu, kdy se sval pod zátěží prodlužuje (např. spouštění do dřepu)."}},
+ {abbr:"Concentric",cat:"technique",
+  en:{name:"Concentric phase",def:"The lifting part of a lift, where the muscle shortens (e.g. standing up from a squat)."},
+  cs:{name:"Koncentrická fáze",def:"Zvedací část pohybu, kdy se sval zkracuje (např. vstávání z dřepu)."}},
+ {abbr:"Isometric",cat:"technique",
+  en:{name:"Isometric",def:"Muscle working without the joint moving, e.g. a plank or a paused hold."},
+  cs:{name:"Izometrie",def:"Sval pracuje bez pohybu v kloubu, např. prkno nebo výdrž."}},
+ {abbr:"Negative",cat:"technique",
+  en:{name:"Negative",def:"Doing only the lowering phase slowly, e.g. jumping to the top of a pull-up and lowering for 5 s."},
+  cs:{name:"Negativ",def:"Jen pomalá brzdivá fáze, např. vyskočíš do horní pozice shybu a 5 s se spouštíš."}},
+ {abbr:"ROM",cat:"technique",
+  en:{name:"Range Of Motion",def:"How far a joint moves during an exercise. 'Full ROM' = through the complete movement."},
+  cs:{name:"Rozsah pohybu",def:"Jak velký pohyb kloub během cviku udělá. „Plný ROM“ = celý rozsah."}},
+ {abbr:"Kipping",cat:"technique",
+  en:{name:"Kipping",def:"Using a hip swing to generate momentum in gymnastic movements like pull-ups. Allows more reps; 'strict' = no swing."},
+  cs:{name:"Kipping",def:"Využití švihu z boků v gymnastických cvicích, např. shybech. Umožní víc opakování; „strict“ = bez švihu."}},
+ {abbr:"Grip",cat:"technique",
+  en:{name:"Grip types",def:"Pronated = overhand (palms away). Supinated = underhand (palms toward you). Neutral = palms facing each other. Mixed = one of each (used in deadlifts)."},
+  cs:{name:"Typy úchopu",def:"Nadhmat = dlaně od tebe. Podhmat = dlaně k tobě. Neutrální = dlaně proti sobě. Obouchop (smíšený) = jedna ruka nadhmatem, druhá podhmatem (u mrtvého tahu)."}},
+ {abbr:"Brace",cat:"technique",
+  en:{name:"Bracing",def:"Taking a big breath into the belly and tightening the core all around before a heavy rep, to keep the spine stable."},
+  cs:{name:"Zpevnění trupu",def:"Velký nádech do břicha a zpevnění celého trupu dokola před těžkým opakováním, aby páteř zůstala stabilní."}},
+ {abbr:"Compound",cat:"technique",
+  en:{name:"Compound vs. isolation",def:"Compound exercises use several joints and muscle groups (squat, row). Isolation exercises target one joint or muscle (biceps curl, lateral raise)."},
+  cs:{name:"Vícekloubové vs. izolované cviky",def:"Vícekloubové cviky zapojují víc kloubů a svalových skupin (dřep, přítahy). Izolované cílí na jeden kloub nebo sval (bicepsový zdvih, upažování)."}},
+
+ {abbr:"Volume",cat:"programming",
+  en:{name:"Training volume",def:"Total work done — usually sets × reps × weight, or the number of hard sets per muscle per week."},
+  cs:{name:"Tréninkový objem",def:"Celkové množství práce — obvykle série × opakování × váha, nebo počet těžkých sérií na sval za týden."}},
+ {abbr:"Progressive overload",cat:"programming",
+  en:{name:"Progressive overload",def:"Gradually increasing the demand over time — more weight, more reps, more sets, or better quality — so the body keeps adapting."},
+  cs:{name:"Progresivní přetížení",def:"Postupné zvyšování nároků — víc váhy, opakování, sérií nebo lepší kvalita — aby se tělo dál adaptovalo."}},
+ {abbr:"Deload",cat:"programming",
+  en:{name:"Deload",def:"A planned lighter week (less weight or volume) to recover before continuing to progress."},
+  cs:{name:"Odlehčovací týden (deload)",def:"Plánovaný lehčí týden (méně váhy nebo objemu) na zotavení, než se pokračuje v progresi."}},
+ {abbr:"Hypertrophy",cat:"programming",
+  en:{name:"Hypertrophy",def:"Muscle growth. Hypertrophy training typically uses moderate weights and moderate-to-high reps taken close to failure."},
+  cs:{name:"Hypertrofie",def:"Růst svalů. Trénink na hypertrofii obvykle používá střední váhy a střední až vyšší počet opakování blízko selhání."}},
+ {abbr:"Periodization",cat:"programming",
+  en:{name:"Periodization",def:"Planning training in phases (e.g. volume phase, strength phase, peak) over weeks or months."},
+  cs:{name:"Periodizace",def:"Plánování tréninku ve fázích (např. objemová, silová, vrchol) v horizontu týdnů nebo měsíců."}},
+ {abbr:"Split",cat:"programming",
+  en:{name:"Training split",def:"How you divide training across the week — e.g. full body, upper/lower, push/pull/legs (PPL)."},
+  cs:{name:"Tréninkový split",def:"Jak rozdělíš trénink během týdne — např. celé tělo, horní/dolní polovina, tlaky/tahy/nohy (PPL)."}},
+ {abbr:"DOMS",cat:"programming",src:["doms"],
+  en:{name:"Delayed Onset Muscle Soreness",def:"Muscle soreness after unfamiliar or hard training. It usually builds over the first day and peaks around 24–72 hours afterwards. Sharp or unusual pain is not DOMS."},
+  cs:{name:"Opožděná svalová bolest (svalovice)",def:"Bolest svalů po neobvyklém nebo tvrdém tréninku. Obvykle narůstá první den a vrcholí zhruba 24–72 hodin po tréninku. Ostrá nebo neobvyklá bolest není svalovice."}},
+
+ {abbr:"Rack",cat:"kb",src:["kwClean","hkKB"],
+  en:{name:"Rack position",def:"The kettlebell resting at the chest after a clean: wrist neutral, elbow close to the ribs, bell supported by the forearm and upper arm, torso tall. The start position for presses, jerks and front squats."},
+  cs:{name:"Rack (pozice u hrudníku)",def:"Kettlebell spočívá u hrudníku po přemístění: zápěstí rovné, loket u žeber, kettlebell opřený o předloktí a paži, trup vzpřímený. Výchozí pozice pro tlaky, jerky a čelní dřepy."}},
+ {abbr:"Hardstyle",cat:"kb",src:["wikiKB"],
+  en:{name:"Hardstyle vs. sport style",def:"Two schools of kettlebell technique. Hardstyle (e.g. StrongFirst, RKC) uses a strong hip hinge and maximal tension for power and strength. Sport style (kettlebell sport / girevoy) is built for efficiency over long sets, with more knee bend and relaxed arms."},
+  cs:{name:"Hardstyle vs. sportovní styl",def:"Dvě školy techniky s kettlebellem. Hardstyle (např. StrongFirst, RKC) používá výrazný předklon v kyčlích a maximální napětí kvůli síle a výbušnosti. Sportovní styl (kettlebellový sport / girevoj) je stavěný na úspornost v dlouhých sériích, s větším pokrčením kolen a uvolněnými pažemi."}},
+ {abbr:"GS",cat:"kb",src:["wikiGS","eliteGS"],
+  en:{name:"Kettlebell sport (girevoy sport)",def:"Competitive kettlebell lifting: as many reps as possible in a fixed time without setting the bell down — classically 10 minutes. Main events: jerk, snatch and long cycle; biathlon = a jerk set plus a snatch set. Jerk and long cycle can use one or two bells; snatch uses one."},
+  cs:{name:"Kettlebellový sport (girevoj)",def:"Soutěžní zvedání kettlebellů: co nejvíc opakování za daný čas bez položení kettlebellu — klasicky 10 minut. Hlavní disciplíny: jerk, trh a long cycle; biatlon = série jerku plus série trhu. Jerk a long cycle se dělají s jedním nebo dvěma kettlebelly, trh s jedním."}},
+ {abbr:"Fixation",cat:"kb",src:["wikiGS"],
+  en:{name:"Fixation (lockout)",def:"In kettlebell sport, the moment a rep counts: arm(s) locked overhead, legs straight, body still. Without a clear fixation, the judge doesn't count the rep."},
+  cs:{name:"Fixace",def:"V kettlebellovém sportu okamžik, kdy se opakování počítá: paže zamčené nad hlavou, nohy propnuté, tělo v klidu. Bez jasné fixace rozhodčí opakování nezapočítá."}},
+ {abbr:"Hand switch",cat:"kb",src:["wikiGS"],
+  en:{name:"Hand switch",def:"Changing the bell to the other hand during a one-arm set. In classic 10-minute competition sets with one bell, only one switch is allowed."},
+  cs:{name:"Výměna ruky",def:"Přendání kettlebellu do druhé ruky během jednoruční série. V klasických 10minutových soutěžních sériích s jedním kettlebellem je povolená jen jedna výměna."}},
+ {abbr:"Pood",cat:"kb",
+  en:{name:"Pood",def:"Old Russian weight unit used for kettlebells: 1 pood ≈ 16 kg. So 1.5 pood ≈ 24 kg and 2 pood ≈ 32 kg."},
+  cs:{name:"Pud",def:"Stará ruská jednotka hmotnosti používaná u kettlebellů: 1 pud ≈ 16 kg. Tedy 1,5 pudu ≈ 24 kg a 2 pudy ≈ 32 kg."}}
+];
+
+/* ============================================================
+   UI TEXT
+   ============================================================ */
+const T = {
+ en:{tabs:{ex:"Exercises",terms:"Terms",fav:"Saved",about:"About"},search:{ex:"Search exercises…",terms:"Search terms (AMRAP, RPE…)",fav:"Search saved…"},
+  all:"All",back:"‹ Back",muscles:"Muscles",how:"How to do it",cues:"Key cues",mistakes:"Common mistakes",scale:"Scaling",video:"Video",
+  vidTech:"▶ Technique videos on YouTube",vidMist:"Common mistakes videos",vidTerm:"▶ Explainer videos on YouTube",
+  meaning:"Meaning",example:"Example",related:"Related",sources:"Checked against",unchecked:"Standard coaching guidance — not yet checked against a specific source.",
+  checked:"checked",empty:"No matches.",noSaved:"Nothing saved yet.<br>Tap ☆ on any exercise or term.",
+  cats:{kb:"Kettlebell",legs:"Legs",push:"Push",pull:"Pull",arms:"Arms",core:"Core",cond:"Conditioning",format:"Workout format",sets:"Sets & reps",intensity:"Intensity",technique:"Technique",programming:"Programming"},
+  levels:["Beginner","Intermediate","Advanced"],
+  equip:{bbdbkb:"Barbell / Dumbbells / Kettlebells",kb2:"2 kettlebells",airbike:"Air bike",barbell:"Barbell",dbkb:"Dumbbell / Kettlebell",bbdb:"Barbell / Dumbbells",bwdb:"Bodyweight / Dumbbells",benchdb:"Bench + Dumbbells",bbbench:"Barbell + Bench",machine:"Machine",machstep:"Machine / Step",dbbench:"Dumbbells + Bench",bw:"Bodyweight",bars:"Parallel bars",db:"Dumbbells",cable:"Cable",bar:"Pull-up bar",cablerope:"Cable + rope",dbbb:"Dumbbells / Barbell",cableband:"Cable / Band",kb:"Kettlebell",box:"Plyo box",medball:"Medicine ball + wall",rower:"Rowing machine",rope:"Jump rope"},
+  about:(e,t,c)=>`<div class="sec"><h3>What this is</h3><p>A pocket guide to ${e} common gym exercises and ${t} training terms, in Czech and English. Tap anything for details, technique steps and video links. Tap ☆ to save favourites on this phone.</p></div>
+  <div class="sec"><h3>Install on your phone</h3><p><strong>iPhone (Safari):</strong> Share button → <em>Add to Home Screen</em>.</p><p><strong>Android (Chrome):</strong> ⋮ menu → <em>Add to Home screen</em> / <em>Install app</em>.</p></div>
+  <div class="sec"><h3>How accurate is it?</h3><p>${c} items were checked against outside sources (coaching manuals like NSCA and NASM, CrossFit, British Rowing, Concept2, and research papers). Those show a <span class="badge ok">✓</span> mark and list their sources. The rest follow standard coaching guidance and say so. Different coaches teach some details differently — e.g. squat stance or bench press elbow angle — so treat ranges as starting points.</p></div>
+  <div class="sec warn"><h3>Disclaimer</h3><p class="note">General information, not personal coaching or medical advice. If something hurts, stop and ask a qualified coach or physio. Video links are YouTube searches — the quality of individual videos varies.</p></div>`},
+ cs:{tabs:{ex:"Cviky",terms:"Pojmy",fav:"Uložené",about:"Info"},search:{ex:"Hledat cvik…",terms:"Hledat pojem (AMRAP, RPE…)",fav:"Hledat v uložených…"},
+  all:"Vše",back:"‹ Zpět",muscles:"Svaly",how:"Jak na to",cues:"Klíčové pokyny",mistakes:"Časté chyby",scale:"Úprava obtížnosti",video:"Video",
+  vidTech:"▶ Videa s technikou na YouTube",vidMist:"Videa o častých chybách",vidTerm:"▶ Vysvětlující videa na YouTube",
+  meaning:"Význam",example:"Příklad",related:"Související",sources:"Ověřeno podle",unchecked:"Běžná trenérská praxe — zatím neověřeno podle konkrétního zdroje.",
+  checked:"ověřeno",empty:"Nic nenalezeno.",noSaved:"Zatím nic uloženého.<br>Klepni na ☆ u cviku nebo pojmu.",
+  cats:{kb:"Kettlebell",legs:"Nohy",push:"Tlaky",pull:"Tahy",arms:"Paže",core:"Střed těla",cond:"Kondice",format:"Formát tréninku",sets:"Série a opakování",intensity:"Intenzita",technique:"Technika",programming:"Plánování"},
+  levels:["Začátečník","Mírně pokročilý","Pokročilý"],
+  equip:{bbdbkb:"Osa / jednoručky / kettlebelly",kb2:"2 kettlebelly",airbike:"Air bike",barbell:"Osa",dbkb:"Jednoručka / kettlebell",bbdb:"Osa / jednoručky",bwdb:"Vlastní váha / jednoručky",benchdb:"Lavička + jednoručky",bbbench:"Osa + lavička",machine:"Stroj",machstep:"Stroj / schod",dbbench:"Jednoručky + lavička",bw:"Vlastní váha",bars:"Bradla",db:"Jednoručky",cable:"Kladka",bar:"Hrazda",cablerope:"Kladka + lano",dbbb:"Jednoručky / osa",cableband:"Kladka / guma",kb:"Kettlebell",box:"Bedna",medball:"Medicinbal + zeď",rower:"Veslovací trenažér",rope:"Švihadlo"},
+  about:(e,t,c)=>`<div class="sec"><h3>Co to je</h3><p>Kapesní průvodce ${e} běžnými cviky v posilovně a ${t} tréninkovými pojmy, česky i anglicky. Klepni na cokoli pro detaily, postup a odkazy na videa. Klepnutím na ☆ si uložíš oblíbené v tomto telefonu.</p></div>
+  <div class="sec"><h3>Instalace do telefonu</h3><p><strong>iPhone (Safari):</strong> tlačítko Sdílet → <em>Přidat na plochu</em>.</p><p><strong>Android (Chrome):</strong> menu ⋮ → <em>Přidat na plochu</em> / <em>Nainstalovat aplikaci</em>.</p></div>
+  <div class="sec"><h3>Jak je to přesné?</h3><p>${c} položek bylo ověřeno podle vnějších zdrojů (trenérské manuály NSCA a NASM, CrossFit, British Rowing, Concept2 a odborné studie). Ty mají značku <span class="badge ok">✓</span> a seznam zdrojů. Ostatní vycházejí z běžné trenérské praxe a je to u nich uvedeno. Někteří trenéři učí některé detaily jinak — např. postavení nohou v dřepu nebo úhel loktů u bench pressu — takže rozsahy ber jako výchozí bod.</p></div>
+  <div class="sec warn"><h3>Upozornění</h3><p class="note">Obecné informace, ne osobní trénink ani lékařská rada. Když něco bolí, přestaň a poraď se s kvalifikovaným trenérem nebo fyzioterapeutem. Odkazy na videa jsou vyhledávání na YouTube — kvalita jednotlivých videí se liší.</p></div>`}
+};
+const EX_CATS=["kb","legs","push","pull","arms","core","cond"], TERM_CATS=["format","sets","intensity","technique","programming","kb"];
+const inCat=(e,c)=>c==="all"||(c==="kb"?!!e.kb:e.cat===c);
+
+/* ============================================================ */
+const store = {
+  get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+let lang = store.get("gg-lang","en");
+let favs = new Set(store.get("gg-favs",[]));
+let state = {tab:"ex", cat:"all", q:""};
+let current=null;
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const L = o=>o[lang]||o.en;
+const t = ()=>T[lang];
+const exKey=e=>"e:"+e.id, termKey=x=>"t:"+x.abbr;
+const norm=s=>String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+const match=txt=>norm(txt).includes(norm(state.q));
+const exText=e=>[e.en.name,e.cs.name,e.en.muscles,e.cs.muscles,t().equip[e.equip]].join(" ");
+const termText=x=>[x.abbr,x.en.name,x.cs.name,L(x).def].join(" ");
+const checkedCount=EXERCISES.filter(e=>e.src).length+TERMS.filter(x=>x.src).length;
+
+function render(){
+  document.documentElement.lang=lang;
+  document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("on",b.dataset.lang===lang));
+  document.querySelectorAll("nav.tabs button").forEach(b=>{b.textContent=t().tabs[b.dataset.tab];b.classList.toggle("on",b.dataset.tab===state.tab)});
+  $("#back").textContent=t().back;
+  $("#pageTitle").textContent=t().tabs[state.tab];
+  $("#q").style.display=state.tab==="about"?"none":"";
+  $("#q").placeholder=t().search[state.tab]||"";
+  const list=$("#list"), chips=$("#chips");
+  chips.innerHTML=""; list.innerHTML="";
+  if(state.tab==="about"){ list.innerHTML=`<div class="about">${t().about(EXERCISES.length,TERMS.length,checkedCount)}</div>`; return; }
+  const cats = state.tab==="ex"?EX_CATS: state.tab==="terms"?TERM_CATS:null;
+  if(cats) chips.innerHTML=["all",...cats].map(c=>`<button class="chip ${c===state.cat?"on":""}" data-cat="${c}">${esc(c==="all"?t().all:t().cats[c])}</button>`).join("");
+  let items=[];
+  if(state.tab==="ex") items=EXERCISES.filter(e=>inCat(e,state.cat)&&match(exText(e))).map(exCard);
+  else if(state.tab==="terms") items=TERMS.filter(x=>(state.cat==="all"||x.cat===state.cat)&&match(termText(x))).map(termCard);
+  else {
+    items=[...EXERCISES.filter(e=>favs.has(exKey(e))&&match(exText(e))).map(exCard),
+           ...TERMS.filter(x=>favs.has(termKey(x))&&match(termText(x))).map(termCard)];
+    if(!items.length && !state.q){list.innerHTML=`<div class="empty">${t().noSaved}</div>`;return;}
+  }
+  list.innerHTML = items.length?items.join(""):`<div class="empty">${t().empty}</div>`;
+}
+function exCard(e){const d=L(e);
+  return `<button class="card" data-ex="${e.id}"><div class="main"><div class="name">${esc(d.name)}</div>
+  <div class="sub">${esc(d.muscles)}</div></div>${e.src?`<span class="badge ok" title="${t().checked}">✓</span>`:""}</button>`;}
+function termCard(x){const d=L(x);
+  return `<button class="card" data-term="${esc(x.abbr)}"><span class="abbr">${esc(x.abbr)}</span>
+  <div class="main"><div class="name">${esc(d.name)}</div><div class="sub">${esc(d.def)}</div></div></button>`;}
+const yt=q=>"https://www.youtube.com/results?search_query="+encodeURIComponent(q);
+function srcHTML(keys){
+  if(!keys) return `<p class="note">${t().unchecked}</p>`;
+  return `<div class="sec src"><h3>${t().sources}</h3><ul>${keys.map(k=>`<li><a href="${esc(S[k][1])}" target="_blank" rel="noopener">${esc(S[k][0])}</a></li>`).join("")}</ul></div>`;
+}
+function openDetail(kind,item,push=true){
+  current={kind,item};
+  const key=kind==="ex"?exKey(item):termKey(item);
+  const star=$("#dStar"); star.textContent=favs.has(key)?"★":"☆"; star.classList.toggle("on",favs.has(key));
+  const d=L(item), other=item[lang==="cs"?"en":"cs"];
+  let h="";
+  if(kind==="ex"){
+    h+=`<h2>${esc(d.name)}</h2><p class="alt">${esc(other.name)}</p><div class="meta"><span class="badge">${esc(t().cats[item.cat])}</span>${item.kb&&item.equip!=="kb"?`<span class="badge">Kettlebell</span>`:""}<span class="badge">${esc(t().equip[item.equip])}</span><span class="badge">${esc(t().levels[item.level])}</span>${item.src?`<span class="badge ok">✓ ${t().checked}</span>`:""}</div>`;
+    h+=`<p class="lead">${esc(d.about)}</p>`;
+    h+=`<div class="sec"><h3>${t().muscles}</h3>${esc(d.muscles)}</div>`;
+    h+=`<div class="sec"><h3>${t().how}</h3><ol>${d.steps.map(s=>`<li>${esc(s)}</li>`).join("")}</ol></div>`;
+    if(d.cues) h+=`<div class="sec"><h3>${t().cues}</h3><ul>${d.cues.map(s=>`<li>${esc(s)}</li>`).join("")}</ul></div>`;
+    if(d.mistakes) h+=`<div class="sec warn"><h3>${t().mistakes}</h3><ul>${d.mistakes.map(s=>`<li>${esc(s)}</li>`).join("")}</ul></div>`;
+    if(d.scale) h+=`<div class="sec"><h3>${t().scale}</h3>${esc(d.scale)}</div>`;
+    h+=`<div class="sec"><h3>${t().video}</h3>`;
+    if(item.video) h+=`<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/${esc(item.video)}" allowfullscreen loading="lazy" title="${esc(d.name)}"></iframe></div>`;
+    h+=`<a class="btn" href="${yt(item.en.name+" proper form technique")}" target="_blank" rel="noopener">${t().vidTech}</a>`;
+    h+=`<a class="btn ghost" href="${yt(item.en.name+" common mistakes")}" target="_blank" rel="noopener">${t().vidMist}</a></div>`;
+    h+=srcHTML(item.src);
+  } else {
+    h+=`<h2>${esc(item.abbr)}</h2><div class="meta"><span class="badge">${esc(t().cats[item.cat])}</span>${item.src?`<span class="badge ok">✓ ${t().checked}</span>`:""}</div>`;
+    h+=`<p class="lead"><strong>${esc(d.name)}</strong>${other.name!==d.name?`<br><span class="alt">${esc(other.name)}</span>`:""}</p>`;
+    h+=`<div class="sec"><h3>${t().meaning}</h3>${esc(d.def)}</div>`;
+    if(d.ex) h+=`<div class="sec"><h3>${t().example}</h3><div class="example">${esc(d.ex)}</div></div>`;
+    const rel=TERMS.filter(x=>x.cat===item.cat&&x!==item).slice(0,8);
+    if(rel.length) h+=`<div class="sec"><h3>${t().related}</h3><div class="related">${rel.map(r=>`<button data-term="${esc(r.abbr)}">${esc(r.abbr)}</button>`).join("")}</div></div>`;
+    h+=`<a class="btn ghost" href="${yt(item.en.name+" explained workout")}" target="_blank" rel="noopener">${t().vidTerm}</a><div style="height:12px"></div>`;
+    h+=srcHTML(item.src);
+  }
+  $("#dBody").innerHTML=h;
+  const el=$("#detail"); el.classList.add("open"); el.setAttribute("aria-hidden","false"); el.scrollTop=0;
+  if(push){try{history.pushState({d:1},"")}catch(e){}}
+}
+function closeDetail(){ const el=$("#detail"); el.classList.remove("open"); el.setAttribute("aria-hidden","true"); current=null; render(); }
+
+document.addEventListener("click",ev=>{
+  const b=ev.target.closest("[data-tab],[data-cat],[data-ex],[data-term],[data-lang]");
+  if(!b) return;
+  if(b.dataset.lang){lang=b.dataset.lang;store.set("gg-lang",lang);render();if(current)openDetail(current.kind,current.item,false);}
+  else if(b.dataset.tab){state.tab=b.dataset.tab;state.cat="all";state.q="";$("#q").value="";if(current)closeDetail();render();window.scrollTo(0,0);}
+  else if(b.dataset.cat){state.cat=b.dataset.cat;render();}
+  else if(b.dataset.ex){openDetail("ex",EXERCISES.find(e=>e.id===b.dataset.ex),!current);}
+  else if(b.dataset.term){openDetail("term",TERMS.find(x=>x.abbr===b.dataset.term),!current);}
+});
+$("#q").addEventListener("input",e=>{state.q=e.target.value;render();});
+$("#back").addEventListener("click",()=>{ if(history.state&&history.state.d){try{history.back();return}catch(e){}} closeDetail(); });
+window.addEventListener("popstate",()=>{ if(current) closeDetail(); });
+$("#dStar").addEventListener("click",()=>{
+  if(!current) return;
+  const key=current.kind==="ex"?exKey(current.item):termKey(current.item);
+  favs.has(key)?favs.delete(key):favs.add(key);
+  store.set("gg-favs",[...favs]);
+  $("#dStar").textContent=favs.has(key)?"★":"☆"; $("#dStar").classList.toggle("on",favs.has(key));
+});
+if("serviceWorker" in navigator && location.protocol==="https:" && !/claude/.test(location.hostname)){
+  navigator.serviceWorker.register("sw.js").catch(()=>{});
+}
+render();
+}
+</script>
+</body>
+</html>
