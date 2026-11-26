@@ -55,6 +55,12 @@
   .abbr{flex:none;min-width:64px;max-width:40%;font-weight:700;color:var(--accent);font-size:15px}
   .star{flex:none;font-size:20px;color:var(--muted);padding:6px 4px;min-width:44px;min-height:44px}
   .star.on{color:var(--accent)}
+  .bar-r{display:flex;align-items:center;gap:4px}
+  .share{font-weight:600;color:var(--text);padding:8px 12px;min-height:40px;border-radius:10px;background:var(--panel2);font-size:14px}
+  .toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:40;
+    background:var(--accent);color:var(--accent-ink);font-weight:700;padding:10px 16px;border-radius:12px;max-width:90vw;
+    overflow-wrap:anywhere;opacity:0;pointer-events:none;transition:opacity .2s}
+  .toast.show{opacity:1;pointer-events:auto}
   .empty{color:var(--muted);text-align:center;padding:40px 0}
   nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:10;display:flex;justify-content:center;
     background:rgba(17,20,24,.96);border-top:1px solid var(--line);
@@ -107,6 +113,7 @@
   <main id="list" class="list"></main>
 </div>
 
+<div id="toast" class="toast" role="status"></div>
 <nav class="tabs"><div class="in">
   <button data-tab="ex" class="on"></button>
   <button data-tab="terms"></button>
@@ -115,7 +122,7 @@
 </div></nav>
 
 <section id="detail" class="detail" aria-hidden="true">
-  <div class="bar"><button class="back" id="back"></button><button class="star" id="dStar" aria-label="Save">☆</button></div>
+  <div class="bar"><button class="back" id="back"></button><div class="bar-r"><button class="share" id="dShare"></button><button class="star" id="dStar" aria-label="Save">☆</button></div></div>
   <div class="body" id="dBody"></div>
 </section>
 
@@ -1185,7 +1192,7 @@ const TERMS = [
    ============================================================ */
 const T = {
  en:{tabs:{ex:"Exercises",terms:"Terms",fav:"Saved",about:"About"},search:{ex:"Search exercises…",terms:"Search terms (AMRAP, RPE…)",fav:"Search saved…"},
-  all:"All",back:"‹ Back",muscles:"Muscles",how:"How to do it",cues:"Key cues",mistakes:"Common mistakes",scale:"Scaling",video:"Video",
+  all:"All",back:"‹ Back",share:"Share ↗",copied:"Link copied",muscles:"Muscles",how:"How to do it",cues:"Key cues",mistakes:"Common mistakes",scale:"Scaling",video:"Video",
   vidTech:"▶ Technique videos on YouTube",vidMist:"Common mistakes videos",vidTerm:"▶ Explainer videos on YouTube",
   meaning:"Meaning",example:"Example",related:"Related",sources:"Checked against",unchecked:"Standard coaching guidance — not yet checked against a specific source.",
   checked:"checked",empty:"No matches.",noSaved:"Nothing saved yet.<br>Tap ☆ on any exercise or term.",
@@ -1197,7 +1204,7 @@ const T = {
   <div class="sec"><h3>How accurate is it?</h3><p>${c} items were checked against outside sources (coaching manuals like NSCA and NASM, CrossFit, British Rowing, Concept2, and research papers). Those show a <span class="badge ok">✓</span> mark and list their sources. The rest follow standard coaching guidance and say so. Different coaches teach some details differently — e.g. squat stance or bench press elbow angle — so treat ranges as starting points.</p></div>
   <div class="sec warn"><h3>Disclaimer</h3><p class="note">General information, not personal coaching or medical advice. If something hurts, stop and ask a qualified coach or physio. Video links are YouTube searches — the quality of individual videos varies.</p></div>`},
  cs:{tabs:{ex:"Cviky",terms:"Pojmy",fav:"Uložené",about:"Info"},search:{ex:"Hledat cvik…",terms:"Hledat pojem (AMRAP, RPE…)",fav:"Hledat v uložených…"},
-  all:"Vše",back:"‹ Zpět",muscles:"Svaly",how:"Jak na to",cues:"Klíčové pokyny",mistakes:"Časté chyby",scale:"Úprava obtížnosti",video:"Video",
+  all:"Vše",back:"‹ Zpět",share:"Sdílet ↗",copied:"Odkaz zkopírován",muscles:"Svaly",how:"Jak na to",cues:"Klíčové pokyny",mistakes:"Časté chyby",scale:"Úprava obtížnosti",video:"Video",
   vidTech:"▶ Videa s technikou na YouTube",vidMist:"Videa o častých chybách",vidTerm:"▶ Vysvětlující videa na YouTube",
   meaning:"Význam",example:"Příklad",related:"Související",sources:"Ověřeno podle",unchecked:"Běžná trenérská praxe — zatím neověřeno podle konkrétního zdroje.",
   checked:"ověřeno",empty:"Nic nenalezeno.",noSaved:"Zatím nic uloženého.<br>Klepni na ☆ u cviku nebo pojmu.",
@@ -1297,9 +1304,21 @@ function openDetail(kind,item,push=true){
   }
   $("#dBody").innerHTML=h;
   const el=$("#detail"); el.classList.add("open"); el.setAttribute("aria-hidden","false"); el.scrollTop=0;
-  if(push){try{history.pushState({d:1},"")}catch(e){}}
+  $("#dShare").textContent=t().share;
+  const url=location.pathname+location.search+"#"+slugOf(kind,item);
+  try{ if(push) history.pushState({d:1},"",url); else history.replaceState({d:(history.state&&history.state.d)||0},"",url); }catch(e){}
 }
-function closeDetail(){ const el=$("#detail"); el.classList.remove("open"); el.setAttribute("aria-hidden","true"); current=null; render(); }
+function closeDetail(){ const el=$("#detail"); el.classList.remove("open"); el.setAttribute("aria-hidden","true"); current=null;
+  if(location.hash){try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}} render(); }
+function slugOf(kind,item){ return kind==="ex"?item.id:"t-"+item.abbr.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""); }
+function fromHash(){
+  const h=decodeURIComponent(location.hash.slice(1)); if(!h) return null;
+  const e=EXERCISES.find(x=>x.id===h); if(e) return ["ex",e];
+  const tm=TERMS.find(x=>slugOf("term",x)===h); if(tm) return ["term",tm];
+  return null;
+}
+let toastTimer;
+function toast(msg){ const el=$("#toast"); el.textContent=msg; el.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove("show"),2500); }
 
 document.addEventListener("click",ev=>{
   const b=ev.target.closest("[data-tab],[data-cat],[data-ex],[data-term],[data-lang]");
@@ -1312,7 +1331,14 @@ document.addEventListener("click",ev=>{
 });
 $("#q").addEventListener("input",e=>{state.q=e.target.value;render();});
 $("#back").addEventListener("click",()=>{ if(history.state&&history.state.d){try{history.back();return}catch(e){}} closeDetail(); });
-window.addEventListener("popstate",()=>{ if(current) closeDetail(); });
+window.addEventListener("popstate",()=>{ const f=fromHash(); if(f) openDetail(f[0],f[1],false); else if(current) closeDetail(); });
+$("#dShare").addEventListener("click",async()=>{
+  if(!current) return;
+  const link=location.href.split("#")[0]+"#"+slugOf(current.kind,current.item);
+  const title=current.kind==="ex"?L(current.item).name:current.item.abbr;
+  try{ if(navigator.share){ await navigator.share({title:"Gym Guide – "+title,url:link}); return; } }catch(e){ if(e&&e.name==="AbortError") return; }
+  try{ await navigator.clipboard.writeText(link); toast(t().copied); }catch(e){ toast(link); }
+});
 $("#dStar").addEventListener("click",()=>{
   if(!current) return;
   const key=current.kind==="ex"?exKey(current.item):termKey(current.item);
@@ -1324,6 +1350,7 @@ if("serviceWorker" in navigator && location.protocol==="https:" && !/claude/.tes
   navigator.serviceWorker.register("sw.js").catch(()=>{});
 }
 render();
+{ const f=fromHash(); if(f) openDetail(f[0],f[1],false); }
 }
 </script>
 </body>
