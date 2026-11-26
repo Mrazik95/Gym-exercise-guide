@@ -55,6 +55,8 @@
   .abbr{flex:none;min-width:64px;max-width:40%;font-weight:700;color:var(--accent);font-size:15px}
   .star{flex:none;font-size:20px;color:var(--muted);padding:6px 4px;min-width:44px;min-height:44px}
   .star.on{color:var(--accent)}
+  .card{cursor:pointer}
+  .lstar{margin:-10px -8px -10px 0;font-size:22px}
   .bar-r{display:flex;align-items:center;gap:4px}
   .share{font-weight:600;color:var(--text);padding:8px 12px;min-height:40px;border-radius:10px;background:var(--panel2);font-size:14px}
   .toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:40;
@@ -1196,7 +1198,7 @@ const T = {
   all:"All",back:"‹ Back",share:"Share ↗",shareApp:"Share this app ↗",copied:"Link copied",muscles:"Muscles",how:"How to do it",cues:"Key cues",mistakes:"Common mistakes",scale:"Scaling",video:"Video",
   vidTech:"▶ Technique videos on YouTube",vidMist:"Common mistakes videos",vidTerm:"▶ Explainer videos on YouTube",
   meaning:"Meaning",example:"Example",related:"Related",sources:"Checked against",unchecked:"Standard coaching guidance — not yet checked against a specific source.",
-  checked:"checked",empty:"No matches.",fav:"★ Favorites",noFav:{ex:"No favorite exercises yet.<br>Tap ☆ on any exercise to add it here.",terms:"No favorite terms yet.<br>Tap ☆ on any term to add it here."},
+  checked:"checked",empty:"No matches.",fav:"★ Favorites",favBtn:"Add to favorites",noFav:{ex:"No favorite exercises yet.<br>Tap ☆ on any exercise to add it here.",terms:"No favorite terms yet.<br>Tap ☆ on any term to add it here."},
   cats:{abbr:"Abbreviations",kb:"Kettlebell",legs:"Legs",push:"Push",pull:"Pull",arms:"Arms",core:"Core",cond:"Full body & cardio",format:"Workout format",sets:"Sets & reps",intensity:"Intensity",technique:"Technique",programming:"Programming"},
   levels:["Beginner","Intermediate","Advanced"],
   equip:{abmat:"AbMat / mat",skierg:"SkiErg",climbrope:"Climbing rope",wall:"Wall",kbbb:"Kettlebell / Barbell",db2kb:"2 dumbbells / kettlebells",bbdbkb:"Barbell / Dumbbells / Kettlebells",kb2:"2 kettlebells",airbike:"Air bike",barbell:"Barbell",dbkb:"Dumbbell / Kettlebell",bbdb:"Barbell / Dumbbells",bwdb:"Bodyweight / Dumbbells",benchdb:"Bench + Dumbbells",bbbench:"Barbell + Bench",machine:"Machine",machstep:"Machine / Step",dbbench:"Dumbbells + Bench",bw:"Bodyweight",bars:"Parallel bars",db:"Dumbbells",cable:"Cable",bar:"Pull-up bar",cablerope:"Cable + rope",dbbb:"Dumbbells / Barbell",cableband:"Cable / Band",kb:"Kettlebell",box:"Plyo box",medball:"Medicine ball + wall",rower:"Rowing machine",rope:"Jump rope"},
@@ -1208,7 +1210,7 @@ const T = {
   all:"Vše",back:"‹ Zpět",share:"Sdílet ↗",shareApp:"Sdílet aplikaci ↗",copied:"Odkaz zkopírován",muscles:"Svaly",how:"Jak na to",cues:"Klíčové pokyny",mistakes:"Časté chyby",scale:"Úprava obtížnosti",video:"Video",
   vidTech:"▶ Videa s technikou na YouTube",vidMist:"Videa o častých chybách",vidTerm:"▶ Vysvětlující videa na YouTube",
   meaning:"Význam",example:"Příklad",related:"Související",sources:"Ověřeno podle",unchecked:"Běžná trenérská praxe — zatím neověřeno podle konkrétního zdroje.",
-  checked:"ověřeno",empty:"Nic nenalezeno.",fav:"★ Oblíbené",noFav:{ex:"Zatím žádné oblíbené cviky.<br>Klepni na ☆ u cviku a objeví se tady.",terms:"Zatím žádné oblíbené pojmy.<br>Klepni na ☆ u pojmu a objeví se tady."},
+  checked:"ověřeno",empty:"Nic nenalezeno.",fav:"★ Oblíbené",favBtn:"Přidat do oblíbených",noFav:{ex:"Zatím žádné oblíbené cviky.<br>Klepni na ☆ u cviku a objeví se tady.",terms:"Zatím žádné oblíbené pojmy.<br>Klepni na ☆ u pojmu a objeví se tady."},
   cats:{abbr:"Zkratky",kb:"Kettlebell",legs:"Nohy",push:"Tlaky",pull:"Tahy",arms:"Paže",core:"Střed těla",cond:"Celé tělo a kardio",format:"Formát tréninku",sets:"Série a opakování",intensity:"Intenzita",technique:"Technika",programming:"Plánování"},
   levels:["Začátečník","Mírně pokročilý","Pokročilý"],
   equip:{abmat:"AbMat / podložka",skierg:"SkiErg",climbrope:"Šplhací lano",wall:"Zeď",kbbb:"Kettlebell / osa",db2kb:"2 jednoručky / kettlebelly",bbdbkb:"Osa / jednoručky / kettlebelly",kb2:"2 kettlebelly",airbike:"Air bike",barbell:"Osa",dbkb:"Jednoručka / kettlebell",bbdb:"Osa / jednoručky",bwdb:"Vlastní váha / jednoručky",benchdb:"Lavička + jednoručky",bbbench:"Osa + lavička",machine:"Stroj",machstep:"Stroj / schod",dbbench:"Jednoručky + lavička",bw:"Vlastní váha",bars:"Bradla",db:"Jednoručky",cable:"Kladka",bar:"Hrazda",cablerope:"Kladka + lano",dbbb:"Jednoručky / osa",cableband:"Kladka / guma",kb:"Kettlebell",box:"Bedna",medball:"Medicinbal + zeď",rower:"Veslovací trenažér",rope:"Švihadlo"},
@@ -1262,11 +1264,14 @@ function render(){
   list.innerHTML = items.length?items.join(""):`<div class="empty">${t().empty}</div>`;
 }
 function exCard(e){const d=L(e);
-  return `<button class="card" data-ex="${e.id}"><div class="main"><div class="name">${esc(d.name)}</div>
-  <div class="sub">${esc(d.muscles)}</div></div></button>`;}
+  return `<div class="card" role="button" tabindex="0" data-ex="${e.id}"><div class="main"><div class="name">${esc(d.name)}</div>
+  <div class="sub">${esc(d.muscles)}</div></div>${starBtn(exKey(e))}</div>`;}
 function termCard(x){const d=L(x);
-  return `<button class="card" data-term="${esc(x.abbr)}"><span class="abbr">${esc(x.abbr)}</span>
-  <div class="main"><div class="name">${esc(d.name)}</div>${x.cat==="abbr"?"":`<div class="sub">${esc(d.def)}</div>`}</div></button>`;}
+  return `<div class="card" role="button" tabindex="0" data-term="${esc(x.abbr)}"><span class="abbr">${esc(x.abbr)}</span>
+  <div class="main"><div class="name">${esc(d.name)}</div>${x.cat==="abbr"?"":`<div class="sub">${esc(d.def)}</div>`}</div>${starBtn(termKey(x))}</div>`;}
+function starBtn(key){const on=favs.has(key);
+  return `<button class="star lstar ${on?"on":""}" data-fav="${esc(key)}" aria-pressed="${on}" aria-label="${t().favBtn}">${on?"★":"☆"}</button>`;}
+function toggleFav(key){ favs.has(key)?favs.delete(key):favs.add(key); store.set("gg-favs",[...favs]); }
 const yt=q=>"https://www.youtube.com/results?search_query="+encodeURIComponent(q);
 function srcHTML(keys){
   if(!keys) return `<p class="note">${t().unchecked}</p>`;
@@ -1320,6 +1325,8 @@ let toastTimer;
 function toast(msg){ const el=$("#toast"); el.textContent=msg; el.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove("show"),2500); }
 
 document.addEventListener("click",ev=>{
+  const fb=ev.target.closest("[data-fav]");
+  if(fb){ ev.stopPropagation(); toggleFav(fb.dataset.fav); render(); return; }
   const b=ev.target.closest("[data-tab],[data-cat],[data-ex],[data-term],[data-lang]");
   if(!b) return;
   if(b.dataset.lang){lang=b.dataset.lang;store.set("gg-lang",lang);render();if(current)openDetail(current.kind,current.item,false);}
@@ -1329,6 +1336,7 @@ document.addEventListener("click",ev=>{
   else if(b.dataset.term){openDetail("term",TERMS.find(x=>x.abbr===b.dataset.term),!current);}
 });
 $("#q").addEventListener("input",e=>{state.q=e.target.value;render();});
+document.addEventListener("keydown",ev=>{ const c=ev.target.closest&&ev.target.closest(".card"); if(c&&ev.target===c&&(ev.key==="Enter"||ev.key===" ")){ev.preventDefault();c.click();} });
 $("#back").addEventListener("click",()=>{ if(history.state&&history.state.d){try{history.back();return}catch(e){}} closeDetail(); });
 window.addEventListener("popstate",()=>{ const f=fromHash(); if(f) openDetail(f[0],f[1],false); else if(current) closeDetail(); });
 async function shareLink(title,link){
